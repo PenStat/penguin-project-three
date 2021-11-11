@@ -10,6 +10,20 @@ export class promptImg extends LitElement {
     return 'image-prompt';
   }
 
+  // CSS - specific to Lit
+  static get styles() {
+    return css`
+      :host {
+        display: block;
+      }
+      :host([correct]) {
+        display: block;
+        color: red;
+        opacity: 0.5;
+      }
+    `;
+  }
+
   // HTMLElement life-cycle, built in; use this for setting defaults
   constructor() {
     super();
@@ -22,9 +36,10 @@ export class promptImg extends LitElement {
   // properties that you wish to use as data in HTML, CSS, and the updated life-cycle
   static get properties() {
     return {
+      ...super.properties,
       imgSrc: { type: String, reflect: true, attribute: 'img-src' },
       imgTag: { type: String },
-      correct: { type: Boolean },
+      correct: { type: Boolean, reflect: true },
     };
   }
 
@@ -32,7 +47,7 @@ export class promptImg extends LitElement {
   // this allows you to react to variables changing and use javascript to perform logic
   updated(changedProperties) {
     changedProperties.forEach((oldValue, propName) => {
-      if (propName === 'need' && this[propName] === 'joy') {
+      if (propName === 'correct' && this[propName] === 'joy') {
         this.classList.add('joyful');
       }
     });
@@ -57,19 +72,6 @@ export class promptImg extends LitElement {
   // this fires every time the element moves
   disconnectedCallback() {
     super.disconnectedCallback();
-  }
-
-  // CSS - specific to Lit
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-      }
-      :host([need='joy']) {
-        color: yellow;
-        background-color: black;
-      }
-    `;
   }
 
   // HTML - specific to Lit
