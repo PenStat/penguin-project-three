@@ -21,9 +21,14 @@ export class promptImg extends LitElement {
         color: red;
         opacity: 0.5;
       }
+      img {
+        border: 5px solid pink;
+        border-radius: 19px;
+      }
     `;
   }
 
+  // overlay on div tag - wrap image in div & style div
   // HTMLElement life-cycle, built in; use this for setting defaults
   constructor() {
     super();
