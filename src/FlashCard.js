@@ -13,6 +13,10 @@ export class FlashCard extends LitElement {
   constructor() {
     super();
     this.need = 'all need to succeed';
+
+    setTimeout(() => {
+      import('./AnswerBox.js');
+    }, 0);
   }
 
   // properties that you wish to use as data in HTML, CSS, and the updated life-cycle
