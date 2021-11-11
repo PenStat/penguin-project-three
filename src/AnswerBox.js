@@ -125,10 +125,11 @@ export class AnswerBox extends LitElement {
         background-color: #19b9e6;
         color: white;
         font-size: 14px;
-        margin: none;
+        margin: unset;
         padding: 14px;
-        border-radius: 0px 20px 20px 0px;
+        border-radius: 0px 19px 19px 0px;
         border: none;
+        overflow: hidden;
       }
       button:hover {
         opacity: .5;
