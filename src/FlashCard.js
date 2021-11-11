@@ -53,6 +53,10 @@ export class FlashCard extends LitElement {
       :host {
         display: block;
         border: 2px solid;
+        min-width: 320px;
+        border-radius: 20px;
+        padding: 20px;
+        width: 5em;
       }
     `;
   }
