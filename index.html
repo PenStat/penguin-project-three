@@ -35,18 +35,27 @@
 
 <body>
   <ul class="menu">
-    <li><a href="#">Rename demo</a></li>
+    <li><a href="#">Flashcard Demo</a></li>
     <li><a href="/hax.html">HAX, card demo</a></li>
   </ul>
   <div class="wrapper">
-    <rename-me need="joy">Some inner text that will render out</rename-me>
+    <flash-card need="joy">Some inner text that will render out</flash-card>
     <word-count>
-      <rename-me need="nothing"><div>You feel much shame.</div></rename-me>
+      <flash-card need="nothing"><div>You feel much shame.</div></flash-card>
     </word-count>
+    <answer-box>
+      <p slot="front">What is strawberry in Spanish</p>
+      <p slot="back">fresa</p>
+    </answer-box>
+    <answer-box back-first>
+      <p slot="front">What is blackberry in Spanish</p>
+      <p slot="back">mora</p>
+    </answer-box>
   </div>
   <script type="module">
-    import "./rename-me.js";
+    import "./flash-card.js";
     import "@lrnwebcomponents/word-count/word-count.js";
+    import "./src/AnswerBox.js";
   </script>
 </body>
 

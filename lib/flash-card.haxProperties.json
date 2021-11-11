@@ -4,7 +4,7 @@
     "canEditSource": true,
     "contentEditable": true,
     "gizmo": {
-      "title": "Rename me",
+      "title": "Flashcard",
       "description": "An element to improve the future of education",
       "icon": "credit-card",
       "color": "blue",
@@ -24,7 +24,7 @@
     },
     "demoSchema": [
       {
-        "tag": "rename-me",
+        "tag": "flashcard",
         "properties": {
             "need": "the future"
         },
