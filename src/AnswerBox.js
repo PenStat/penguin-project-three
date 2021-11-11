@@ -4,7 +4,7 @@
 import { LitElement, html, css } from 'lit';
 
 export class AnswerBox extends LitElement {
-  
+
   static get tag() {
     return 'answer-box';
   }
@@ -63,18 +63,18 @@ export class AnswerBox extends LitElement {
     return text.localeCompare(other, undefined, { sensitivity: 'base' }) === 0;
   }
 
-  // Use data-correct-answer so that parent elements will be able to 
+  // Use data-correct-answer so that parent elements will be able to
   // know if the answer was correct or incorrect
   // We might need to add an incorrect data attribute not sure yet......
   checkAnswer() {
-    let answer = this.shadowRoot.getElementById('answer').value;
+    const answer = this.shadowRoot.getElementById('answer').value;
     if (!this.backFirst) {
       if (this.equalsIgnoringCase(answer, this.back)) {
         this.setAttribute('data-correct-answer', "");
       } else {
         this.removeAttribute('data-correct-answer');
       }
-    } 
+    }
     if (this.backFirst) {
       if (this.equalsIgnoringCase(answer, this.front)) {
         this.setAttribute('data-correct-answer', "");
@@ -82,7 +82,7 @@ export class AnswerBox extends LitElement {
       this.removeAttribute('data-correct-answer');
       }
     }
-    
+
   }
 
   // CSS - specific to Lit
@@ -91,7 +91,7 @@ export class AnswerBox extends LitElement {
       :host {
         display: flex;
         flex-direction: column;
-        align-items: center;
+        //align-items: center;
       }
       :host([need='joy']) {
         color: yellow;

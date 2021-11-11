@@ -39,14 +39,16 @@
     <li><a href="/hax.html">HAX, card demo</a></li>
   </ul>
   <div class="wrapper">
-    <flash-card need="joy">Some inner text that will render out</flash-card>
-    <word-count>
-      <flash-card need="nothing"><div>You feel much shame.</div></flash-card>
-    </word-count>
+    <flash-card>
+      <p slot="front">What is strawberry in Spanish</p>
+      <p slot="back">fresa</p>
+    </flash-card>
+    <br><p>-------------------------------------</p><br>
     <answer-box>
       <p slot="front">What is strawberry in Spanish</p>
       <p slot="back">fresa</p>
     </answer-box>
+    <br><p>-------------------------------------</p><br>
     <answer-box back-first>
       <p slot="front">What is blackberry in Spanish</p>
       <p slot="back">mora</p>
@@ -54,7 +56,6 @@
   </div>
   <script type="module">
     import "./Flash-Card.js";
-    import "@lrnwebcomponents/word-count/word-count.js";
     import "./src/AnswerBox.js";
   </script>
 </body>
