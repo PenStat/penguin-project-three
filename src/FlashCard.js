@@ -52,7 +52,7 @@ export class FlashCard extends LitElement {
     return css`
       :host {
         display: block;
-        outline: black;
+        border: 2px solid;
       }
     `;
   }
