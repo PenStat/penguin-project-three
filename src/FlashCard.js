@@ -1,6 +1,7 @@
-import { LitElement, html, css } from 'lit';
+import { html, css } from 'lit';
+import { SimpleColors } from '@lrnwebcomponents/simple-colors';
 
-export class FlashCard extends LitElement {
+export class FlashCard extends SimpleColors {
   static get tag() {
     return 'flash-card';
   }
@@ -17,6 +18,7 @@ export class FlashCard extends LitElement {
   // properties that you wish to use as data in HTML, CSS, and the updated life-cycle
   static get properties() {
     return {
+      inverted: { type: Boolean },
     };
   }
 
@@ -57,6 +59,7 @@ export class FlashCard extends LitElement {
         border-radius: 20px;
         padding: 20px;
         width: 5em;
+        background-color: var(--simple-colors-default-theme-accent-7);
       }
     `;
   }
