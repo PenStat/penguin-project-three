@@ -16,14 +16,31 @@ export class promptImg extends LitElement {
       :host {
         display: block;
       }
+
       :host([correct]) {
         display: block;
         color: red;
         opacity: 0.5;
       }
+
       img {
-        border: 5px solid pink;
+        display: flex;
+        margin: auto;
+        margin-top: 30px;
+        height: 200px;
+        width: 275px;
+        border: 5px solid white;
         border-radius: 19px;
+        box-shadow: 0px 0px 10px black;
+      }
+
+      .backgroundbox {
+        display: flex;
+        background-color: #dceeff;
+        color: #dceeff;
+        border: 1px #dceeff;
+        border-radius: 19px 19px 0px 0px;
+        height: 300px;
       }
     `;
   }
@@ -81,7 +98,11 @@ export class promptImg extends LitElement {
 
   // HTML - specific to Lit
   render() {
-    return html` <img src="${this.imgTag}" alt="default img" /> `;
+    return html`
+      <div class="backgroundbox">
+        <img src="${this.imgTag}" alt="default img" />
+      </div>
+    `;
   }
 
   // HAX specific callback
