@@ -1,9 +1,10 @@
 // TODO:
 // See updated function below, fix corner button styling gap, add simple colors
 
-import { LitElement, html, css } from 'lit';
+import { html, css } from 'lit';
+import { SimpleColors } from '@lrnwebcomponents/simple-colors';
 
-export class AnswerBox extends LitElement {
+export class AnswerBox extends SimpleColors {
 
   static get tag() {
     return 'answer-box';
@@ -91,11 +92,7 @@ export class AnswerBox extends LitElement {
       :host {
         display: flex;
         flex-direction: column;
-        //align-items: center;
-      }
-      :host([need='joy']) {
-        color: yellow;
-        background-color: black;
+        align-items: center;
       }
       .answer-section {
         display: flex;
@@ -105,6 +102,8 @@ export class AnswerBox extends LitElement {
         width: 300px;
         border-radius: 20px;
         border: solid 1px gray;
+        background-color: var(--simple-colors-default-theme-accent-7);
+        padding: 0;
       }
       .answer-section:focus-within {
         border-color: #9ecaed;
@@ -112,11 +111,12 @@ export class AnswerBox extends LitElement {
       }
       input {
         border: none;
-        background-color: none;
         padding: 10px;
-        margin: 2px;
-        border-radius: 20px;
         font-size: 14px;
+        height: 42px;
+        border-radius: 19px 0 0 19px;
+        margin: 0;
+        width: 11em;
       }
       input:focus {
         outline: none;
@@ -127,9 +127,11 @@ export class AnswerBox extends LitElement {
         font-size: 14px;
         margin: unset;
         padding: 14px;
-        border-radius: 0px 19px 19px 0px;
+        border-radius: 0 19px 19px 0;
         border: none;
         overflow: hidden;
+        width: 50em;
+        height: 62px;
       }
       button:hover {
         opacity: .5;
