@@ -1,6 +1,7 @@
 // dependencies / things imported
 import { LitElement, html, css } from 'lit';
 import '@lrnwebcomponents/simple-icon/simple-icon.js';
+import '@lrnwebcomponents/simple-icon/lib/simple-icon-lite.js';
 
 // EXPORT (so make available to other documents that reference this file) a class, that extends LitElement
 
@@ -37,10 +38,10 @@ export class promptImg extends LitElement {
         border-radius: 19px 19px 0px 0px;
         height: 265px;
       }
-      simple-icon {
+      simple-icon-lite {
         --simple-icon-height: 50px;
         --simple-icon-width: 50px;
-        color: black;
+        color: #e9dcff;
       }
 
       :host([correct]) {
@@ -57,6 +58,8 @@ export class promptImg extends LitElement {
     this.imgSrc = 'grey box';
     //                                      W   H    Search Term
     this.imgTag = `https://loremflickr.com/320/240/${this.imgSrc}`;
+    this.correct = false;
+    this.answerIcon = true;
   }
 
   // properties that you wish to use as data in HTML, CSS, and the updated life-cycle
@@ -66,7 +69,7 @@ export class promptImg extends LitElement {
       imgSrc: { type: String, reflect: true, attribute: 'img-src' },
       imgTag: { type: String },
       correct: { type: Boolean, reflect: true },
-      answerIcon: { type: String, attribute: false },
+      answerIcon: { type: Boolean, reflect: true },
     };
   }
 
@@ -75,7 +78,7 @@ export class promptImg extends LitElement {
   updated(changedProperties) {
     changedProperties.forEach((oldValue, propName) => {
       if (propName === 'correct') {
-        this.classList();
+        this.classList.add('joyful');
       }
     });
   }
@@ -108,6 +111,9 @@ export class promptImg extends LitElement {
         <div class="backgroundbox">
           <img src="${this.imgTag}" alt="default img" />
         </div>
+        ${this.answerIcon
+          ? html` <simple-icon-lite answerIcon="cancel"></simple-icon-lite>`
+          : ``}
       </div>
     `;
   }
