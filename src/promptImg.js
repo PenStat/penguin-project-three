@@ -1,5 +1,6 @@
 // dependencies / things imported
 import { LitElement, html, css } from 'lit';
+import '@lrnwebcomponents/simple-icon/simple-icon.js';
 
 // EXPORT (so make available to other documents that reference this file) a class, that extends LitElement
 
@@ -17,16 +18,10 @@ export class promptImg extends LitElement {
         display: block;
       }
 
-      :host([correct]) {
-        display: block;
-        color: red;
-        opacity: 0.5;
-      }
-
       img {
         display: flex;
         margin: auto;
-        margin-top: 30px;
+        margin-top: 25px;
         height: 200px;
         width: 275px;
         border: 5px solid white;
@@ -40,7 +35,16 @@ export class promptImg extends LitElement {
         color: #dceeff;
         border: 1px #dceeff;
         border-radius: 19px 19px 0px 0px;
-        height: 300px;
+        height: 265px;
+      }
+      simple-icon {
+        --simple-icon-height: 50px;
+        --simple-icon-width: 50px;
+        color: black;
+      }
+
+      :host([correct]) {
+        color: green;
       }
     `;
   }
@@ -62,6 +66,7 @@ export class promptImg extends LitElement {
       imgSrc: { type: String, reflect: true, attribute: 'img-src' },
       imgTag: { type: String },
       correct: { type: Boolean, reflect: true },
+      answerIcon: { type: String, attribute: false },
     };
   }
 
@@ -69,8 +74,8 @@ export class promptImg extends LitElement {
   // this allows you to react to variables changing and use javascript to perform logic
   updated(changedProperties) {
     changedProperties.forEach((oldValue, propName) => {
-      if (propName === 'correct' && this[propName] === 'joy') {
-        this.classList.add('joyful');
+      if (propName === 'correct') {
+        this.classList();
       }
     });
   }
@@ -99,8 +104,10 @@ export class promptImg extends LitElement {
   // HTML - specific to Lit
   render() {
     return html`
-      <div class="backgroundbox">
-        <img src="${this.imgTag}" alt="default img" />
+      <div>
+        <div class="backgroundbox">
+          <img src="${this.imgTag}" alt="default img" />
+        </div>
       </div>
     `;
   }
