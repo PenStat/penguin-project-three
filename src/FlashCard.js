@@ -18,6 +18,7 @@ export class FlashCard extends SimpleColors {
   // properties that you wish to use as data in HTML, CSS, and the updated life-cycle
   static get properties() {
     return {
+      ...super.properties,
       inverted: { type: Boolean },
     };
   }
@@ -51,7 +52,9 @@ export class FlashCard extends SimpleColors {
 
   // CSS - specific to Lit
   static get styles() {
-    return css`
+    return [
+      ...super.styles,
+      css`
       :host {
         display: block;
         border: 2px solid;
@@ -59,9 +62,9 @@ export class FlashCard extends SimpleColors {
         border-radius: 20px;
         padding: 20px;
         width: 5em;
-        background-color: var(--simple-colors-default-theme-accent-7);
+        background-color: var(--simple-colors-default-theme-accent-2);
       }
-    `;
+    `];
   }
 
   // HTML - specific to Lit
