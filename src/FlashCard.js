@@ -55,24 +55,28 @@ export class FlashCard extends SimpleColors {
     return [
       ...super.styles,
       css`
-      :host {
-        display: block;
-        border: 2px solid;
-        min-width: 320px;
-        border-radius: 20px;
-        padding: 20px;
-        width: 5em;
-        background-color: var(--simple-colors-default-theme-accent-2);
-      }
-    `];
+        :host {
+          display: block;
+          border: 2px solid;
+          min-width: 320px;
+          border-radius: 20px;
+          padding: 20px;
+          width: 5em;
+          background-color: var(--simple-colors-default-theme-accent-2);
+        }
+        p {
+          color: var(--simple-colors-default-theme-accent-10);
+        }
+      `,
+    ];
   }
 
   // HTML - specific to Lit
   render() {
     return html`
-      <image-prompt><slot name='back'></slot></image-prompt>
-      <p><slot name='front'></slot></p>
-      <answer-box><slot name='back'></slot></answer-box>
+      <image-prompt><slot name="back"></slot></image-prompt>
+      <p><slot name="front"></slot></p>
+      <answer-box><slot name="back"></slot></answer-box>
     `;
   }
 

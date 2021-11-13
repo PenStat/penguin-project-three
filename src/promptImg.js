@@ -1,6 +1,6 @@
 // dependencies / things imported
 import { LitElement, html, css } from 'lit';
-import '@lrnwebcomponents/simple-icon/simple-icon.js';
+import '@lrnwebcomponents/simple-icon/lib/simple-icons.js';
 import '@lrnwebcomponents/simple-icon/lib/simple-icon-lite.js';
 
 // EXPORT (so make available to other documents that reference this file) a class, that extends LitElement
@@ -21,13 +21,12 @@ export class promptImg extends LitElement {
 
       img {
         display: flex;
-        margin: auto;
-        margin-top: 25px;
+        margin: 25px auto auto;
         height: 200px;
         width: 275px;
         border: 5px solid white;
         border-radius: 19px;
-        box-shadow: 0px 0px 10px black;
+        box-shadow: 0 0 10px black;
       }
 
       .backgroundbox {
@@ -35,9 +34,10 @@ export class promptImg extends LitElement {
         background-color: #dceeff;
         color: #dceeff;
         border: 1px #dceeff;
-        border-radius: 19px 19px 0px 0px;
+        border-radius: 19px 19px 0 0;
         height: 265px;
       }
+
       simple-icon-lite {
         --simple-icon-height: 50px;
         --simple-icon-width: 50px;
@@ -112,7 +112,7 @@ export class promptImg extends LitElement {
           <img src="${this.imgTag}" alt="default img" />
         </div>
         ${this.answerIcon
-          ? html` <simple-icon-lite answerIcon="cancel"></simple-icon-lite>`
+          ? html`<simple-icon-lite icon="cancel"></simple-icon-lite>`
           : ``}
       </div>
     `;
