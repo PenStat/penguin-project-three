@@ -41,11 +41,14 @@ export class promptImg extends LitElement {
       simple-icon-lite {
         --simple-icon-height: 50px;
         --simple-icon-width: 50px;
-        color: #e9dcff;
+        color: white;
+        margin: -295px auto auto;
+        margin-left: 135px;
       }
 
       :host([correct]) {
         color: green;
+        background-color: green;
       }
     `;
   }
@@ -78,7 +81,7 @@ export class promptImg extends LitElement {
   updated(changedProperties) {
     changedProperties.forEach((oldValue, propName) => {
       if (propName === 'correct') {
-        this.classList.add('joyful');
+        this.classList.add('correctAnswer');
       }
     });
   }
@@ -112,7 +115,7 @@ export class promptImg extends LitElement {
           <img src="${this.imgTag}" alt="default img" />
         </div>
         ${this.answerIcon
-          ? html`<simple-icon-lite icon="cancel"></simple-icon-lite>`
+          ? html`<simple-icon-lite icon="check"></simple-icon-lite>`
           : ``}
       </div>
     `;
