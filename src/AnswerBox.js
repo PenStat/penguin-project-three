@@ -1,9 +1,9 @@
 import { I18NMixin } from '@lrnwebcomponents/i18n-manager/lib/I18NMixin.js';
 
-import { LitElement, html, css } from 'lit';
+import { html, css } from 'lit';
+import { SimpleColors } from '@lrnwebcomponents/simple-colors';
 
-export class AnswerBox extends I18NMixin(LitElement) {
-
+export class AnswerBox extends I18NMixin(SimpleColors) {
   static get tag() {
     return 'answer-box';
   }
@@ -24,8 +24,12 @@ export class AnswerBox extends I18NMixin(LitElement) {
     this.registerLocalization({
       context: this,
       localesPath: new URL('../locales/', import.meta.url).href,
-      locales: ['es'],
+      locales: ['es', 'fr'],
     });
+    this.speech = new SpeechSynthesisUtterance();
+    this.speech.lang = navigator.language.substring(0, 2); // uses language of the browser
+    this.i18store = window.I18NManagerStore.requestAvailability();
+    this.speech.lang = this.i18store.lang;
   }
 
   static get properties() {
@@ -43,6 +47,13 @@ export class AnswerBox extends I18NMixin(LitElement) {
   updated(changedProperties) {
     if (super.updated) {
       super.updated(changedProperties);
+      changedProperties.forEach((oldValue, propName) => {
+        if (propName === 't') {
+          this.i18store = window.I18NManagerStore.requestAvailability();
+          this.speech.lang = this.i18store.lang;
+          console.log(this.speech.lang);
+        }
+      });
     }
     changedProperties.forEach((oldValue, propName) => {
       if (propName === 'correct') {
@@ -60,6 +71,21 @@ export class AnswerBox extends I18NMixin(LitElement) {
     });
   }
 
+  firstUpdated(changedProperties) {
+    if (super.firstUpdated) {
+      super.firstUpdated(changedProperties);
+    }
+    const btn = this.shadowRoot.querySelector('#check');
+    this.shadowRoot
+      .querySelector('#answer')
+      .addEventListener('keyup', event => {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+          btn.click();
+        }
+      });
+  }
+
   // Need this instead of .toUpperCase() for i18n
   equalsIgnoringCase(text) {
     return (
@@ -75,11 +101,13 @@ export class AnswerBox extends I18NMixin(LitElement) {
   checkUserAnswer() {
     const side = this.back ? 'front' : 'back';
     const comparison = this.shadowRoot
-      .querySelector(`slot[name="${side}"]`)
+      .querySelector(`[name="${side}"]`)
+      .assignedNodes({ flatten: true })[0]
+      .querySelector(`[name="${side}"]`)
       .assignedNodes({ flatten: true })[0].innerText;
-    console.log(comparison);
+    this.speech.text = comparison;
+    window.speechSynthesis.speak(this.speech);
     this.correct = this.equalsIgnoringCase(comparison);
-    console.log(this.correct);
     this.showResult = true;
     // reverse so that it swaps which slot is shown
     this.sideToShow = !this.back ? 'back' : 'front';
@@ -115,6 +143,8 @@ export class AnswerBox extends I18NMixin(LitElement) {
         width: 300px;
         border-radius: 20px;
         border: solid 1px gray;
+        background-color: var(--simple-colors-default-theme-accent-7);
+        padding: 0;
       }
       .answer-section:focus-within {
         border-color: #9ecaed;
@@ -122,11 +152,12 @@ export class AnswerBox extends I18NMixin(LitElement) {
       }
       input {
         border: none;
-        background-color: none;
         padding: 10px;
-        margin: 2px;
-        border-radius: 20px;
         font-size: 14px;
+        height: 42px;
+        border-radius: 19px 0 0 19px;
+        margin: 0;
+        width: 11em;
       }
       input:focus {
         outline: none;
@@ -137,17 +168,11 @@ export class AnswerBox extends I18NMixin(LitElement) {
         font-size: 14px;
         margin: none;
         padding: 14px;
-        border-radius: 0px 20px 20px 0px;
+        border-radius: 0 19px 19px 0;
         border: none;
-      }
-      button#retry {
-        background-color: #0a7694;
-        color: white;
-        font-size: 14px;
-        margin: none;
-        padding: 14px;
-        border-radius: 20px;
-        border: none;
+        overflow: hidden;
+        width: 50em;
+        height: 62px;
       }
       button:hover {
         opacity: 0.8;

@@ -38,8 +38,14 @@
     <li><a href="#">Flashcard Demo</a></li>
     <li><a href="/hax.html">HAX, card demo</a></li>
   </ul>
+  <button onclick="toggleLanguage();">Toggle language</button>
   <div class="wrapper">
     <flash-card>
+      <p slot="front">What is strawberry in Spanish</p>
+      <p slot="back">fresa</p>
+    </flash-card>
+
+    <flash-card dark>
       <p slot="front">What is strawberry in Spanish</p>
       <p slot="back">fresa</p>
     </flash-card>
@@ -49,7 +55,7 @@
       <p slot="back">fresa</p>
     </answer-box>
     <br><p>-------------------------------------</p><br>
-    <answer-box back-first>
+    <answer-box back>
       <p slot="front">What is blackberry in Spanish</p>
       <p slot="back">mora</p>
     </answer-box>
@@ -57,6 +63,23 @@
   <script type="module">
     import "./Flash-Card.js";
     import "./src/AnswerBox.js";
+  </script>
+  <script>
+    // just for demonstration
+    var count = 0;
+    function toggleLanguage() {
+      count++
+      const i18store = window.I18NManagerStore.requestAvailability();
+      if (count % 3 === 0) {
+        i18store.lang = "en";
+      }
+      if (count % 3 === 1) {
+        i18store.lang = "es";
+      }
+      if (count % 3 === 2) {
+        i18store.lang = "fr";
+      }
+    }
   </script>
 </body>
 

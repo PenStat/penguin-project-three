@@ -1,6 +1,7 @@
-import { LitElement, html, css } from 'lit';
+import { html, css } from 'lit';
+import { SimpleColors } from '@lrnwebcomponents/simple-colors';
 
-export class FlashCard extends LitElement {
+export class FlashCard extends SimpleColors {
   static get tag() {
     return 'flash-card';
   }
@@ -17,6 +18,8 @@ export class FlashCard extends LitElement {
   // properties that you wish to use as data in HTML, CSS, and the updated life-cycle
   static get properties() {
     return {
+      ...super.properties,
+      inverted: { type: Boolean },
     };
   }
 
@@ -49,20 +52,37 @@ export class FlashCard extends LitElement {
 
   // CSS - specific to Lit
   static get styles() {
-    return css`
-      :host {
-        display: block;
-        border: 2px solid;
-      }
-    `;
+    return [
+      ...super.styles,
+      css`
+        :host {
+          display: block;
+          border: 2px solid;
+          min-width: 320px;
+          border-radius: 20px;
+          padding: 20px;
+          width: 5em;
+          background-color: var(--simple-colors-default-theme-accent-2);
+        }
+        p {
+          color: var(--simple-colors-default-theme-accent-10);
+        }
+      `,
+    ];
   }
 
   // HTML - specific to Lit
   render() {
     return html`
-      <image-prompt><slot name='back'></slot></image-prompt>
-      <p><slot name='front'></slot></p>
-      <answer-box><slot name='back'></slot></answer-box>
+      <image-prompt></image-prompt>
+      <answer-box>
+        <div slot="front">
+          <slot name="front"></slot>
+        </div>
+        <div slot="back">
+          <slot name="back"></slot>
+        </div>
+      </answer-box>
     `;
   }
 

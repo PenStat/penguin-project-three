@@ -1,5 +1,7 @@
 // dependencies / things imported
 import { LitElement, html, css } from 'lit';
+import '@lrnwebcomponents/simple-icon/lib/simple-icons.js';
+import '@lrnwebcomponents/simple-icon/lib/simple-icon-lite.js';
 
 // EXPORT (so make available to other documents that reference this file) a class, that extends LitElement
 
@@ -10,6 +12,48 @@ export class promptImg extends LitElement {
     return 'image-prompt';
   }
 
+  // CSS - specific to Lit
+  static get styles() {
+    return css`
+      :host {
+        display: block;
+      }
+
+      img {
+        display: flex;
+        margin: 25px auto auto;
+        height: 200px;
+        width: 275px;
+        border: 5px solid white;
+        border-radius: 19px;
+        box-shadow: 0 0 10px black;
+      }
+
+      .backgroundbox {
+        display: flex;
+        background-color: #dceeff;
+        color: #dceeff;
+        border: 1px #dceeff;
+        border-radius: 19px 19px 0 0;
+        height: 265px;
+      }
+
+      simple-icon-lite {
+        --simple-icon-height: 50px;
+        --simple-icon-width: 50px;
+        color: white;
+        margin: -295px auto auto;
+        margin-left: 135px;
+      }
+
+      :host([correct]) {
+        color: green;
+        background-color: green;
+      }
+    `;
+  }
+
+  // overlay on div tag - wrap image in div & style div
   // HTMLElement life-cycle, built in; use this for setting defaults
   constructor() {
     super();
@@ -17,14 +61,18 @@ export class promptImg extends LitElement {
     this.imgSrc = 'grey box';
     //                                      W   H    Search Term
     this.imgTag = `https://loremflickr.com/320/240/${this.imgSrc}`;
+    this.correct = false;
+    this.answerIcon = true;
   }
 
   // properties that you wish to use as data in HTML, CSS, and the updated life-cycle
   static get properties() {
     return {
+      ...super.properties,
       imgSrc: { type: String, reflect: true, attribute: 'img-src' },
       imgTag: { type: String },
-      correct: { type: Boolean },
+      correct: { type: Boolean, reflect: true },
+      answerIcon: { type: Boolean, reflect: true },
     };
   }
 
@@ -32,8 +80,8 @@ export class promptImg extends LitElement {
   // this allows you to react to variables changing and use javascript to perform logic
   updated(changedProperties) {
     changedProperties.forEach((oldValue, propName) => {
-      if (propName === 'need' && this[propName] === 'joy') {
-        this.classList.add('joyful');
+      if (propName === 'correct') {
+        this.classList.add('correctAnswer');
       }
     });
   }
@@ -59,22 +107,18 @@ export class promptImg extends LitElement {
     super.disconnectedCallback();
   }
 
-  // CSS - specific to Lit
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-      }
-      :host([need='joy']) {
-        color: yellow;
-        background-color: black;
-      }
-    `;
-  }
-
   // HTML - specific to Lit
   render() {
-    return html` <img src="${this.imgTag}" alt="default img" /> `;
+    return html`
+      <div>
+        <div class="backgroundbox">
+          <img src="${this.imgTag}" alt="default img" />
+        </div>
+        ${this.answerIcon
+          ? html`<simple-icon-lite icon="check"></simple-icon-lite>`
+          : ``}
+      </div>
+    `;
   }
 
   // HAX specific callback
