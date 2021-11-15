@@ -34,22 +34,37 @@ export class promptImg extends LitElement {
         background-color: #dceeff;
         color: #dceeff;
         border: 1px #dceeff;
-        border-radius: 19px 19px 0 0;
+        border-radius: 19px 19px 0px 0px;
         height: 265px;
       }
 
-      simple-icon-lite {
-        --simple-icon-height: 50px;
-        --simple-icon-width: 50px;
-        color: white;
-        margin: -295px auto auto;
-        margin-left: 135px;
+      .overlay {
+        position: relative;
       }
 
-      :host([correct]) {
-        color: green;
-        background-color: green;
+      .overlay:before {
+        content: '';
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: rgba(0, 185, 0, 0.75);
+        border: 1px;
+        border-radius: 19px 19px 0px 0px;
       }
+      simple-icon-lite {
+        --simple-icon-height: 100px;
+        --simple-icon-width: 100px;
+        color: white;
+        transform: translate(-50%, -190%);
+        top: 50%;
+        left: 50%;
+      }
+
+      /*:host([correct]) {
+        display: flex;
+        filter: invert(50%);
+        background-color: green;
+      } */
     `;
   }
 
@@ -111,8 +126,10 @@ export class promptImg extends LitElement {
   render() {
     return html`
       <div>
-        <div class="backgroundbox">
-          <img src="${this.imgTag}" alt="default img" />
+        <div class="overlay">
+          <div class="backgroundbox">
+            <img src="${this.imgTag}" alt="default img" />
+          </div>
         </div>
         ${this.answerIcon
           ? html`<simple-icon-lite icon="check"></simple-icon-lite>`
