@@ -17,6 +17,8 @@ export class promptImg extends LitElement {
     return css`
       :host {
         display: block;
+        width: 320px;
+        height: 265px;
       }
 
       img {
@@ -51,6 +53,7 @@ export class promptImg extends LitElement {
         border: 1px;
         border-radius: 19px 19px 0px 0px;
       }
+
       simple-icon-lite {
         --simple-icon-height: 100px;
         --simple-icon-width: 100px;
