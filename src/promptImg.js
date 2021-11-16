@@ -49,7 +49,7 @@ export class promptImg extends LitElement {
         width: 100%;
         height: 100%;
         position: absolute;
-        background: rgba(0, 185, 0, 0.75);
+        //background: rgba(0, 185, 0, 0.75);
         border: 1px;
         border-radius: 19px 19px 0px 0px;
       }
@@ -79,8 +79,9 @@ export class promptImg extends LitElement {
     this.imgSrc = 'grey box';
     //                                      W   H    Search Term
     this.imgTag = `https://loremflickr.com/320/240/${this.imgSrc}`;
-    this.correct = false;
-    this.answerIcon = true;
+    this.correct = 'pending';
+    this.answerIcon = false;
+    this.backColor = 'rgba(0, 0, 0, 0)';
   }
 
   // properties that you wish to use as data in HTML, CSS, and the updated life-cycle
@@ -89,8 +90,9 @@ export class promptImg extends LitElement {
       ...super.properties,
       imgSrc: { type: String, reflect: true, attribute: 'img-src' },
       imgTag: { type: String },
-      correct: { type: Boolean, reflect: true },
+      correct: { type: String, reflect: true }, // Correct, incorrect, pending
       answerIcon: { type: Boolean, reflect: true },
+      backColor: { type: String },
     };
   }
 
@@ -98,8 +100,17 @@ export class promptImg extends LitElement {
   // this allows you to react to variables changing and use javascript to perform logic
   updated(changedProperties) {
     changedProperties.forEach((oldValue, propName) => {
-      if (propName === 'correct') {
-        this.classList.add('correctAnswer');
+      if (propName === 'correct' && this[propName] === 'correct') {
+        this.answerIcon=true;
+        this.backColor = 'rgba(0, 185, 0, 0.75)';
+      }
+      if (propName === 'correct' && this[propName] === 'incorrect') {
+        this.answerIcon=true;
+        this.backColor = 'rgba(185, 0, 0, 0.75)';
+      }
+      if (propName === 'correct' && this[propName] === 'pending') {
+        this.answerIcon=false;
+        this.backColor = 'rgba(0, 0, 0, 0)';
       }
     });
   }
@@ -130,8 +141,8 @@ export class promptImg extends LitElement {
     return html`
       <div>
         <div class="overlay">
-          <div class="backgroundbox">
-            <img src="${this.imgTag}" alt="default img" />
+          <div class="backgroundbox" style='color: ${this.backColor}'>
+            <img src="${this.imgTag}" alt="default img"/>
           </div>
         </div>
         ${this.answerIcon
