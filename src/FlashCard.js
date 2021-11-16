@@ -74,9 +74,15 @@ export class FlashCard extends SimpleColors {
   // HTML - specific to Lit
   render() {
     return html`
-      <image-prompt><slot name="back"></slot></image-prompt>
-      <p><slot name="front"></slot></p>
-      <answer-box><slot name="back"></slot></answer-box>
+      <image-prompt></image-prompt>
+      <answer-box>
+        <div slot="front">
+          <slot name="front"></slot>
+        </div>
+        <div slot="back">
+          <slot name="back"></slot>
+        </div>
+      </answer-box>
     `;
   }
 

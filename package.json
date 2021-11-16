@@ -21,6 +21,7 @@
     "start": "web-dev-server"
   },
   "dependencies": {
+    "@lrnwebcomponents/i18n-manager": "^4.0.1",
     "@lrnwebcomponents/simple-colors": "^4.0.4",
     "@lrnwebcomponents/simple-icon": "^4.0.4",
     "lit": "^2.0.2"
