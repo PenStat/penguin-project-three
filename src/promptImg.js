@@ -38,18 +38,18 @@ export class promptImg extends LitElement {
         border: 1px #dceeff;
         border-radius: 19px 19px 0px 0px;
         height: 265px;
+        width: 320px;
       }
 
       .overlay {
         position: relative;
       }
 
-      .overlay:before {
+      .overlay::before {
         content: '';
         width: 100%;
         height: 100%;
         position: absolute;
-        /*background: rgba(0, 185, 0, 0.75);*/
         border: 1px;
         border-radius: 19px 19px 0px 0px;
       }
@@ -64,12 +64,12 @@ export class promptImg extends LitElement {
         z-index: 100;
       }
 
-      .overlay::before[status='pending'] {
+      :host([status='pending']).overlay::before {
         display: flex;
         background: transparent;
       }
 
-      .overlay::before[status='correct'] {
+      :host([status='correct']).overlay::before {
         display: flex;
         background: green;
       }
