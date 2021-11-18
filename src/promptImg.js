@@ -2,6 +2,7 @@
 import { LitElement, html, css } from 'lit';
 import '@lrnwebcomponents/simple-icon/lib/simple-icons.js';
 import '@lrnwebcomponents/simple-icon/lib/simple-icon-lite.js';
+import '@lrnwebcomponents/simple-colors';
 
 // EXPORT (so make available to other documents that reference this file) a class, that extends LitElement
 
@@ -33,9 +34,9 @@ export class promptImg extends LitElement {
 
       .backgroundbox {
         display: flex;
-        background-color: #dceeff;
-        color: #dceeff;
-        border: 1px #dceeff;
+        background-color: var(--simple-colors-default-theme-accent-3);
+        color: var(--simple-colors-default-theme-accent-3);
+        border: 1px var(--simple-colors-default-theme-accent-3);
         border-radius: 19px 19px 0px 0px;
         height: 265px;
         width: 320px;
@@ -71,12 +72,14 @@ export class promptImg extends LitElement {
 
       :host([status='correct']) .overlay::before {
         display: flex;
-        background: rgba(0, 185, 0, 0.75);
+        background: green;
+        filter: opacity(0.65);
       }
 
       :host([status='incorrect']) .overlay::before {
         display: flex;
-        background: rgba(185, 0, 0, 0.75);
+        background: red;
+        filter: opacity(0.65);
       }
     `;
   }
