@@ -34,10 +34,12 @@ export class promptImg extends LitElement {
 
       .backgroundbox {
         display: flex;
-        background-color: var(--simple-colors-default-theme-accent-3);
-        color: var(--simple-colors-default-theme-accent-3);
-        border: 1px var(--simple-colors-default-theme-accent-3);
-        border-radius: 19px 19px 0px 0px;
+        background-color: var(--simple-colors-default-theme-blue-11);
+        color: var(
+          --simple-colors-default-theme-accent-3
+        ); // Not sure where these are appearing
+        border: 1px var(--simple-colors-default-theme-accent-6);
+        border-radius: 19px 19px 0 0;
         height: 265px;
         width: 320px;
       }
