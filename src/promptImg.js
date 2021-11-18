@@ -2,6 +2,7 @@
 import { LitElement, html, css } from 'lit';
 import '@lrnwebcomponents/simple-icon/lib/simple-icons.js';
 import '@lrnwebcomponents/simple-icon/lib/simple-icon-lite.js';
+import '@lrnwebcomponents/simple-colors';
 
 // EXPORT (so make available to other documents that reference this file) a class, that extends LitElement
 
@@ -33,9 +34,9 @@ export class promptImg extends LitElement {
 
       .backgroundbox {
         display: flex;
-        background-color: #dceeff;
-        color: #dceeff;
-        border: 1px #dceeff;
+        background-color: var(--simple-colors-default-theme-accent-3);
+        color: var(--simple-colors-default-theme-accent-3);
+        border: 1px var(--simple-colors-default-theme-accent-3);
         border-radius: 19px 19px 0px 0px;
         height: 265px;
         width: 320px;
@@ -64,14 +65,21 @@ export class promptImg extends LitElement {
         z-index: 100;
       }
 
-      :host([status='pending']).overlay::before {
+      :host([status='pending']) .overlay::before {
         display: flex;
         background: transparent;
       }
 
-      :host([status='correct']).overlay::before {
+      :host([status='correct']) .overlay::before {
         display: flex;
         background: green;
+        filter: opacity(0.65);
+      }
+
+      :host([status='incorrect']) .overlay::before {
+        display: flex;
+        background: red;
+        filter: opacity(0.65);
       }
     `;
   }
@@ -86,6 +94,7 @@ export class promptImg extends LitElement {
     this.imgTag = `https://loremflickr.com/320/240/${this.imgSrc}`;
     this.status = 'pending';
     this.answerIcon = false;
+    this.icon = '';
   }
 
   // properties that you wish to use as data in HTML, CSS, and the updated life-cycle
@@ -96,6 +105,7 @@ export class promptImg extends LitElement {
       imgTag: { type: String },
       status: { type: String, reflect: true }, // Correct, incorrect, pending
       answerIcon: { type: Boolean, reflect: true },
+      icon: { type: String },
     };
   }
 
@@ -105,9 +115,11 @@ export class promptImg extends LitElement {
     changedProperties.forEach((oldValue, propName) => {
       if (propName === 'status' && this[propName] === 'correct') {
         this.answerIcon = true;
+        this.icon = 'check';
       }
       if (propName === 'status' && this[propName] === 'incorrect') {
         this.answerIcon = true;
+        this.icon = 'cancel';
       }
       if (propName === 'status' && this[propName] === 'pending') {
         this.answerIcon = false;
@@ -146,7 +158,7 @@ export class promptImg extends LitElement {
           </div>
         </div>
         ${this.answerIcon
-          ? html`<simple-icon-lite icon="check"></simple-icon-lite>`
+          ? html`<simple-icon-lite icon="${this.icon}"></simple-icon-lite>`
           : ``}
       </div>
     `;
