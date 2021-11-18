@@ -184,7 +184,7 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
       }
       p {
         font-family: Helvetica;
-        color: gray;
+        color: var(--simple-colors-default-theme-accent-8);
         font-weight: normal;
         font-size: 20px;
       }
