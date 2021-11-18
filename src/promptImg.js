@@ -64,14 +64,19 @@ export class promptImg extends LitElement {
         z-index: 100;
       }
 
-      :host([status='pending']).overlay::before {
+      :host([status='pending']) .overlay::before {
         display: flex;
         background: transparent;
       }
 
-      :host([status='correct']).overlay::before {
+      :host([status='correct']) .overlay::before {
         display: flex;
-        background: green;
+        background: rgba(0, 185, 0, 0.75);
+      }
+
+      :host([status='incorrect']) .overlay::before {
+        display: flex;
+        background: rgba(185, 0, 0, 0.75);
       }
     `;
   }
@@ -86,6 +91,7 @@ export class promptImg extends LitElement {
     this.imgTag = `https://loremflickr.com/320/240/${this.imgSrc}`;
     this.status = 'pending';
     this.answerIcon = false;
+    this.icon = '';
   }
 
   // properties that you wish to use as data in HTML, CSS, and the updated life-cycle
@@ -96,6 +102,7 @@ export class promptImg extends LitElement {
       imgTag: { type: String },
       status: { type: String, reflect: true }, // Correct, incorrect, pending
       answerIcon: { type: Boolean, reflect: true },
+      icon: { type: String },
     };
   }
 
@@ -105,9 +112,11 @@ export class promptImg extends LitElement {
     changedProperties.forEach((oldValue, propName) => {
       if (propName === 'status' && this[propName] === 'correct') {
         this.answerIcon = true;
+        this.icon = 'check';
       }
       if (propName === 'status' && this[propName] === 'incorrect') {
         this.answerIcon = true;
+        this.icon = 'cancel';
       }
       if (propName === 'status' && this[propName] === 'pending') {
         this.answerIcon = false;
@@ -146,7 +155,7 @@ export class promptImg extends LitElement {
           </div>
         </div>
         ${this.answerIcon
-          ? html`<simple-icon-lite icon="check"></simple-icon-lite>`
+          ? html`<simple-icon-lite icon="${this.icon}"></simple-icon-lite>`
           : ``}
       </div>
     `;
