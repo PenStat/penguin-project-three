@@ -63,8 +63,8 @@ These are dedicated status check-ins as this is a multi-week project
 ### Check-in 2
 - See Meeting Notes from the Week of 11/07-11/14
 ### Check-in 3
--
--
+- We didn't really do anything...
+- We are fairly far ahead, so by taking a week off, we are now on track.
 ### Check-in 4
 -
 -
