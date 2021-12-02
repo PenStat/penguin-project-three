@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import '@lrnwebcomponents/a11y-carousel/a11y-carousel.js';
 
 export class FlashCardSet extends LitElement {
   static get tag() {
@@ -15,8 +16,7 @@ export class FlashCardSet extends LitElement {
 
   // properties that you wish to use as data in HTML, CSS, and the updated life-cycle
   static get properties() {
-    return {
-    };
+    return {};
   }
 
   // CSS - specific to Lit
@@ -24,18 +24,13 @@ export class FlashCardSet extends LitElement {
     return css`
       :host {
         display: block;
-        border: 2px solid pink;
       }
     `;
   }
 
   // HTML - specific to Lit
   render() {
-    return html`
-      <image-prompt><slot name='back'></slot></image-prompt>
-      <p><slot name='front'></slot></p>
-      <answer-box><slot name='back'></slot></answer-box>
-    `;
+    return html``;
   }
 
   // HAX specific callback
@@ -48,3 +43,5 @@ export class FlashCardSet extends LitElement {
       .href;
   }
 }
+
+customElements.define(FlashCardSet.tag, FlashCardSet);
