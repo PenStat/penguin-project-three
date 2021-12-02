@@ -78,10 +78,10 @@ export class FlashCard extends SimpleColors {
       <image-prompt></image-prompt>
       <answer-box>
         <div slot="front">
-          <slot name="front"></slot>
+          <slot slot="front" name="front"></slot>
         </div>
         <div slot="back">
-          <slot name="back"></slot>
+          <slot slot="back" name="back"></slot>
         </div>
       </answer-box>
     `;
