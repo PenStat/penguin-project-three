@@ -21,6 +21,7 @@
     "start": "web-dev-server"
   },
   "dependencies": {
+    "@lrnwebcomponents/a11y-carousel": "^4.0.4",
     "@lrnwebcomponents/i18n-manager": "^4.0.1",
     "@lrnwebcomponents/simple-colors": "^4.0.4",
     "@lrnwebcomponents/simple-icon": "^4.0.4",
