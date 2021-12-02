@@ -11,7 +11,7 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
   constructor() {
     super();
     this.back = false;
-    this.correct = false;
+    this.status = 'pending';
     this.showResult = false;
     this.statusIcon = '';
     this.sideToShow = 'front';
@@ -38,7 +38,7 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
       back: { type: Boolean, reflect: true },
       sideToShow: { type: String, reflect: true, attribute: 'side-to-show' },
       userAnswer: { type: String, attribute: 'user-answer' },
-      correct: { type: Boolean, reflect: true },
+      status: { type: String, reflect: true },
       showResult: { type: Boolean, attribute: 'show-result', reflect: true },
       statusIcon: { type: String, attribute: false },
     };
@@ -55,10 +55,9 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
       });
     }
     changedProperties.forEach((oldValue, propName) => {
-      if (propName === 'correct') {
-        this.statusIcon = this[propName]
-          ? 'icons:check-circle'
-          : 'icons:cancel';
+      if (propName === 'status') {
+        this.statusIcon =
+          this[propName] === 'correct' ? 'icons:check-circle' : 'icons:cancel';
       }
       if (propName === 'back') {
         this.sideToShow = this[propName] ? 'back' : 'front';
@@ -94,9 +93,6 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
     );
   }
 
-  // Use data-correct-answer so that parent elements will be able to
-  // know if the answer was correct or incorrect
-  // We might need to add an incorrect data attribute not sure yet......
   checkUserAnswer() {
     const side = this.back ? 'front' : 'back';
     const comparison = this.shadowRoot
@@ -106,7 +102,7 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
       .assignedNodes({ flatten: true })[0].innerText;
     this.speech.text = comparison;
     window.speechSynthesis.speak(this.speech);
-    this.correct = this.equalsIgnoringCase(comparison);
+    this.status = this.equalsIgnoringCase(comparison) ? 'correct' : 'incorrect';
     this.showResult = true;
     // reverse so that it swaps which slot is shown
     this.sideToShow = !this.back ? 'back' : 'front';
@@ -121,7 +117,7 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
   // reset the interaction to the defaults
   resetCard() {
     this.userAnswer = '';
-    this.correct = false;
+    this.status = 'pending';
     this.showResult = false;
     this.sideToShow = this.back ? 'back' : 'front';
   }
@@ -183,7 +179,7 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
       }
       p {
         font-family: Helvetica;
-        color: gray;
+        color: var(--simple-colors-default-theme-grey-12);
         font-weight: normal;
         font-size: 20px;
       }
@@ -194,7 +190,7 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
         display: none;
       }
 
-      :host([correct]) simple-icon-lite {
+      :host([status='correct']) simple-icon-lite {
         color: green;
       }
       simple-icon-lite {

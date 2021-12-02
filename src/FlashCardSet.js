@@ -16,17 +16,7 @@ export class FlashCardSet extends LitElement {
 
   // properties that you wish to use as data in HTML, CSS, and the updated life-cycle
   static get properties() {
-    return {
-    };
-  }
-
-  firstUpdated(changedProperties) {
-    this.shadowRoot.querySelector('slot').assignedNodes({ flatten: true }).forEach((el) => {
-      if (el.tagName === "FLASH-CARD") {
-        //this.shadowRoot.querySelector('a11y-carousel').appendChild(el);
-      }
-    });
-    
+    return {};
   }
 
   // CSS - specific to Lit
@@ -40,42 +30,7 @@ export class FlashCardSet extends LitElement {
 
   // HTML - specific to Lit
   render() {
-    return html`
-      <a11y-carousel>
-        <figure>
-          <flash-card>
-            <p slot="front">What is strawberry in Spanish</p>
-            <p slot="back">fresa</p>
-          </flash-card>
-        </figure>
-        <figure>
-          <flash-card>
-            <p slot="front">What is blackberry in Spanish</p>
-            <p slot="back">mora</p>
-          </flash-card>
-        </figure>
-        <figure>
-          <flash-card>
-            <p slot="front">What is strawberry in French</p>
-            <p slot="back">fraise</p>
-          </flash-card>
-        </figure>
-      </a11y-carousel>
-      <a11y-carousel id="demo1" no-prev-next>
-        <figure id="figure-1">
-          <img src="//placekitten.com/400/200" alt="Random Kitten, 400 X 200">
-          <figcaption>Item 1</figcaption>
-        </figure>
-        <figure id="figure-2">
-          <img src="//placekitten.com/300/100" alt="Random Kitten, 300 X 100">
-          <figcaption>Item 2</figcaption>
-        </figure>
-        <figure id="figure-3">
-          <img src="//placekitten.com/400/300" alt="Random Kitten, 400 X 300">
-          <figcaption>Item 3</figcaption>
-        </figure>
-      </a11y-carousel>
-    `;
+    return html``;
   }
 
   // HAX specific callback

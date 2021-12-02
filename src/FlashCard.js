@@ -57,12 +57,13 @@ export class FlashCard extends SimpleColors {
       css`
         :host {
           display: block;
-          border: 2px solid;
+          border: 2px solid var(--simple-colors-default-theme-accent-12);
           min-width: 320px;
           border-radius: 20px;
           padding: 20px;
           width: 5em;
           background-color: var(--simple-colors-default-theme-accent-2);
+          box-shadow: 5px 5px 5px var(--simple-colors-default-theme-accent-1);
         }
         p {
           color: var(--simple-colors-default-theme-accent-10);
