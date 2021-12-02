@@ -1100,6 +1100,24 @@
   dependencies:
     "@polymer/polymer" "^3.3.1"
 
+"@lrnwebcomponents/a11y-carousel@^4.0.4":
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/@lrnwebcomponents/a11y-carousel/-/a11y-carousel-4.0.4.tgz#47a797f0da15a1bad2d9cefa6c97f50a55a16200"
+  integrity sha512-v1+SGXesJ0CToO/qibTA8S2nwUbQ0HgktVfX4SgGAIqx41tOkWOzznVmBD+tHSa5imu9XVCPkZM221cUv5rwPw==
+  dependencies:
+    "@lrnwebcomponents/a11y-details" "^4.0.4"
+    "@lrnwebcomponents/radio-behaviors" "^4.0.4"
+    "@lrnwebcomponents/simple-icon" "^4.0.4"
+    lit "2.0.0"
+
+"@lrnwebcomponents/a11y-details@^4.0.4":
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/@lrnwebcomponents/a11y-details/-/a11y-details-4.0.4.tgz#bbdfdf9f1732775f396203b989e43f05d10bb3e3"
+  integrity sha512-cC5fGVqOzDg/nG0OISsM33q6ymMH5mH7kmf+GmuCSwMXRZs0lXu/8hCgIg3qdhlY+AWsYRg9C6nbUwsvDhT1fg==
+  dependencies:
+    "@lrnwebcomponents/absolute-position-behavior" "^4.0.4"
+    lit "2.0.0"
+
 "@lrnwebcomponents/a11y-menu-button@^4.0.4":
   version "4.0.4"
   resolved "https://registry.npmjs.org/@lrnwebcomponents/a11y-menu-button/-/a11y-menu-button-4.0.4.tgz"

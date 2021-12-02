@@ -51,7 +51,6 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
         if (propName === 't') {
           this.i18store = window.I18NManagerStore.requestAvailability();
           this.speech.lang = this.i18store.lang;
-          console.log(this.speech.lang);
         }
       });
     }
