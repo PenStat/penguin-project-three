@@ -139,9 +139,7 @@ export class promptImg extends LitElement {
     if (super.firstUpdated) {
       super.firstUpdated(changedProperties);
     }
-    console.log(this.imgSrc);
     if (!this.imgSrc.includes('http')) {
-      console.log('hit');
       this.imgTag = `https://loremflickr.com/320/240/${this.imgSrc}`;
     } else {
       this.imgTag = this.imgSrc;
