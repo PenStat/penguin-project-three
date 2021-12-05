@@ -66,14 +66,17 @@
     function toggleLanguage() {
       count++
       const i18store = window.I18NManagerStore.requestAvailability();
-      if (count % 3 === 0) {
+      if (count % 4 === 0) {
         i18store.lang = "en";
       }
-      if (count % 3 === 1) {
+      if (count % 4 === 1) {
         i18store.lang = "es";
       }
-      if (count % 3 === 2) {
+      if (count % 4 === 2) {
         i18store.lang = "fr";
+      }
+      if (count % 4 === 3) {
+        i18store.lang = "ja";
       }
     }
   </script>
