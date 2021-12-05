@@ -14,6 +14,7 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
     super();
     this.back = false;
     this.status = 'pending';
+    this.correctAnswer = '';
     this.showResult = false;
     this.statusIcon = '';
     this.sideToShow = 'front';
@@ -26,7 +27,7 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
     this.registerLocalization({
       context: this,
       localesPath: new URL('../locales/', import.meta.url).href,
-      locales: ['es', 'fr'],
+      locales: ['es', 'fr', 'ja'],
     });
     this.speech = new SpeechSynthesisUtterance();
     this.speech.lang = navigator.language.substring(0, 2); // uses language of the browser
@@ -57,16 +58,8 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
       });
     }
     changedProperties.forEach((oldValue, propName) => {
-      if (propName === 'status') {
-        this.statusIcon =
-          this[propName] === 'correct' ? 'icons:check-circle' : 'icons:cancel';
-      }
       if (propName === 'back') {
         this.sideToShow = this[propName] ? 'back' : 'front';
-      }
-      if (propName === 'showResult' && this[propName]) {
-        import('@lrnwebcomponents/simple-icon/lib/simple-icon-lite.js');
-        import('@lrnwebcomponents/simple-icon/lib/simple-icons.js');
       }
     });
   }
@@ -106,9 +99,21 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
     // window.speechSynthesis.speak(this.speech);
     this.correct = this.equalsIgnoringCase(comparison);
     this.status = this.equalsIgnoringCase(comparison) ? 'correct' : 'incorrect';
-    this.showResult = true;
+    this.showResult = !this.equalsIgnoringCase(comparison);
     // reverse so that it swaps which slot is shown
-    this.sideToShow = !this.back ? 'back' : 'front';
+    this.correctAnswer = !this.back
+      ? this.shadowRoot
+          .querySelector(`[name="back"]`)
+          .assignedNodes({ flatten: true })[0]
+          .querySelector(`[name="back"]`)
+          .assignedNodes({ flatten: true })[0].innerText
+      : this.shadowRoot
+          .querySelector(`[name="front"]`)
+          .assignedNodes({ flatten: true })[0]
+          .querySelector(`[name="front"]`)
+          .assignedNodes({ flatten: true })[0].innerText;
+    this.shadowRoot.querySelector('#check').disabled = true;
+    this.shadowRoot.querySelector('input').disabled = true;
   }
 
   speakWords() {
@@ -132,10 +137,13 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
 
   // reset the interaction to the defaults
   resetCard() {
+    this.shadowRoot.querySelector('#check').disabled = false;
+    this.shadowRoot.querySelector('input').disabled = false;
     this.userAnswer = '';
     this.status = 'pending';
     this.showResult = false;
     this.sideToShow = this.back ? 'back' : 'front';
+    this.correctAnswer = '';
   }
 
   // CSS - specific to Lit
@@ -234,6 +242,9 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
           <slot name="front" id="front"></slot>
           <slot name="back" id="back"></slot>
         </p>
+        ${this.showResult
+          ? html` <p>The correct answer is: ${this.correctAnswer}</p> `
+          : ``}
         <simple-icon-lite
           icon="../av/volume-up"
           @click="${this.speakWords}"
@@ -256,12 +267,9 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
           ${this.t.checkAnswer}
         </button>
       </div>
-      ${this.showResult
-        ? html`<simple-icon-lite icon="${this.statusIcon}"></simple-icon-lite>
-            <button id="retry" @click="${this.resetCard}">
-              ${this.t.restartActivity}
-            </button>`
-        : ``}
+      <button id="retry" @click="${this.resetCard}">
+        ${this.t.restartActivity}
+      </button>
     `;
   }
 }
