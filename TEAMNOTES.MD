@@ -75,5 +75,7 @@ These are dedicated status check-ins as this is a multi-week project
 - We didn't really do anything...
 - We are fairly far ahead, so by taking a week off, we are now on track.
 ### Check-in 4
--
--
+- Fixed some graphical schtuff with our card
+- Added in speech button for user enabled speaking
+- Working on more styling stuff
+- Functionality largely done
