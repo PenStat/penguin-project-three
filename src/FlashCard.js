@@ -9,6 +9,7 @@ export class FlashCard extends SimpleColors {
   // HTMLElement life-cycle, built in; use this for setting defaults
   constructor() {
     super();
+    this.speak = false;
     setTimeout(() => {
       import('./AnswerBox.js');
       import('./promptImg.js');
@@ -21,6 +22,7 @@ export class FlashCard extends SimpleColors {
       ...super.properties,
       inverted: { type: Boolean },
       imgSrc: { type: String, reflect: true, attribute: 'img-src' },
+      speak: { type: Boolean },
     };
   }
 
@@ -77,7 +79,7 @@ export class FlashCard extends SimpleColors {
   render() {
     return html`
       <image-prompt img-src="${this.imgSrc}"></image-prompt>
-      <answer-box>
+      <answer-box ?speak=${this.speak}>
         <div slot="front">
           <slot slot="front" name="front"></slot>
         </div>
