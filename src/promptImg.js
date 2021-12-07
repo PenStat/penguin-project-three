@@ -34,11 +34,8 @@ export class promptImg extends LitElement {
 
       .backgroundbox {
         display: flex;
-        background-color: var(--simple-colors-default-theme-blue-11);
-        color: var(
-          --simple-colors-default-theme-accent-3
-        ); // Not sure where these are appearing
-        border: 1px var(--simple-colors-default-theme-accent-6);
+        background-color: var(--simple-colors-default-theme-accent-4);
+        border: 1px;
         border-radius: 19px 19px 0 0;
         height: 265px;
         width: 320px;
@@ -161,7 +158,7 @@ export class promptImg extends LitElement {
   // HTML - specific to Lit
   render() {
     return html`
-      <div>
+      <div id="Nest">
         <div class="overlay">
           <div class="backgroundbox">
             <img src="${this.imgTag}" alt="default img" />

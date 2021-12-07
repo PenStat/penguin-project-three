@@ -48,6 +48,11 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
   }
 
   updated(changedProperties) {
+    this.dispatchEvent(
+      new CustomEvent('statusChange', {
+        detail: this.status,
+      })
+    );
     if (super.updated) {
       super.updated(changedProperties);
       changedProperties.forEach((oldValue, propName) => {
