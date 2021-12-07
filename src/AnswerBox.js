@@ -16,6 +16,7 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
     this.status = 'pending';
     this.correctAnswer = '';
     this.showResult = false;
+    this.speak = false;
     this.statusIcon = '';
     this.sideToShow = 'front';
     this.userAnswer = '';
@@ -44,6 +45,7 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
       status: { type: String, reflect: true },
       showResult: { type: Boolean, attribute: 'show-result', reflect: true },
       statusIcon: { type: String, attribute: false },
+      speak: { type: Boolean },
     };
   }
 
@@ -122,15 +124,13 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
   }
 
   speakWords() {
-    console.log('speak');
-    // const side = this.back ? 'front' : 'back';
-    // const comparison = this.shadowRoot
-    //   .querySelector(`[name="${side}"]`)
-    //   .assignedNodes({ flatten: true })[0]
-    //   .querySelector(`[name="${side}"]`)
-    //   .assignedNodes({ flatten: true })[0].innerText;
-    // console.log(this.shadowRoot.getElementById('front').innerHTML);
-    this.speech.text = this.shadowRoot.getElementById('question').innerHTML;
+    const side = this.back ? 'front' : 'back';
+    const comparison = this.shadowRoot
+      .querySelector(`[name="${side}"]`)
+      .assignedNodes({ flatten: true })[0]
+      .querySelector(`[name="${side}"]`)
+      .assignedNodes({ flatten: true })[0].innerText;
+    this.speech.text = comparison;
     window.speechSynthesis.speak(this.speech);
   }
 
@@ -253,11 +253,13 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
         ${this.showResult
           ? html` <p>The correct answer is: ${this.correctAnswer}</p> `
           : ``}
-        <simple-icon-lite
-          icon="../av/volume-up"
-          @click="${this.speakWords}"
-          dark
-        ></simple-icon-lite>
+        ${this.speak
+          ? html` <simple-icon-lite
+              icon="../av/volume-up"
+              @click="${this.speakWords}"
+              dark
+            ></simple-icon-lite>`
+          : ``}
       </div>
       <div class="answer-section">
         <input
