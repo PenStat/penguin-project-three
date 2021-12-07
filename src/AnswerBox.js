@@ -226,9 +226,11 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
         color: green;
       }
       simple-icon-lite {
-        --simple-icon-width: 50px;
-        --simple-icon-height: 50px;
+        --simple-icon-width: 35px;
+        --simple-icon-height: 35px;
         color: red;
+        padding-left: 175px;
+        padding-top: 10px;
       }
 
       .sr-only {
@@ -253,13 +255,6 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
         ${this.showResult
           ? html` <p>The correct answer is: ${this.correctAnswer}</p> `
           : ``}
-        ${this.speak
-          ? html` <simple-icon-lite
-              icon="../av/volume-up"
-              @click="${this.speakWords}"
-              dark
-            ></simple-icon-lite>`
-          : ``}
       </div>
       <div class="answer-section">
         <input
@@ -277,9 +272,19 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
           ${this.t.checkAnswer}
         </button>
       </div>
-      <button id="retry" @click="${this.resetCard}">
-        ${this.t.restartActivity}
-      </button>
+      <simple-icon-lite
+        id="retry"
+        icon="refresh"
+        @click="${this.resetCard}"
+        dark
+      ></simple-icon-lite>
+      ${this.speak
+        ? html` <simple-icon-lite
+            icon="../av/volume-up"
+            @click="${this.speakWords}"
+            dark
+          ></simple-icon-lite>`
+        : ``}
     `;
   }
 }
