@@ -34,10 +34,7 @@ export class promptImg extends LitElement {
 
       .backgroundbox {
         display: flex;
-        background-color: var(--simple-colors-default-theme-blue-11);
-        color: var(
-          --simple-colors-default-theme-accent-3
-        ); // Not sure where these are appearing
+        background-color: var(--simple-colors-default-theme-accent-4);
         border: 1px var(--simple-colors-default-theme-accent-6);
         border-radius: 19px 19px 0 0;
         height: 265px;
@@ -91,12 +88,12 @@ export class promptImg extends LitElement {
   constructor() {
     super();
     // Take answer and google image return
-    if (this.imgSrc === undefined) {
-      this.imgSrc = 'grey box';
+    if (this.imageKeyword === undefined) {
+      this.imageKeyword = 'grey box';
       //                                      W   H    Search Term
-      this.imgTag = `https://loremflickr.com/320/240/${this.imgSrc}`;
+      this.imageTagSrc = `https://loremflickr.com/320/240/${this.imageKeyword}`;
     } else {
-      this.imgTag = this.imgSrc;
+      this.imgTag = this.imageKeyword;
     }
     this.status = 'pending';
     this.answerIcon = false;
@@ -144,10 +141,10 @@ export class promptImg extends LitElement {
     if (super.firstUpdated) {
       super.firstUpdated(changedProperties);
     }
-    if (!this.imgSrc.includes('http')) {
-      this.imgTag = `https://loremflickr.com/320/240/${this.imgSrc}`;
+    if (!this.imageKeyword.includes('http')) {
+      this.imageTagSrc = `https://loremflickr.com/320/240/${this.imageKeyword}`;
     } else {
-      this.imgTag = this.imgSrc;
+      this.imageTagSrc = this.imageKeyword;
     }
   }
 
@@ -166,10 +163,10 @@ export class promptImg extends LitElement {
   // HTML - specific to Lit
   render() {
     return html`
-      <div>
+      <div id="Nest">
         <div class="overlay">
           <div class="backgroundbox">
-            <img src="${this.imgTag}" alt="default img" />
+            <img src="${this.imageTagSrc}" alt="default img" />
           </div>
         </div>
         ${this.answerIcon
