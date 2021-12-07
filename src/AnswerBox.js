@@ -119,15 +119,13 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
   }
 
   speakWords() {
-    console.log('speak');
-    // const side = this.back ? 'front' : 'back';
-    // const comparison = this.shadowRoot
-    //   .querySelector(`[name="${side}"]`)
-    //   .assignedNodes({ flatten: true })[0]
-    //   .querySelector(`[name="${side}"]`)
-    //   .assignedNodes({ flatten: true })[0].innerText;
-    // console.log(this.shadowRoot.getElementById('front').innerHTML);
-    this.speech.text = this.shadowRoot.getElementById('question').innerHTML;
+    const side = this.back ? 'front' : 'back';
+    const comparison = this.shadowRoot
+      .querySelector(`[name="${side}"]`)
+      .assignedNodes({ flatten: true })[0]
+      .querySelector(`[name="${side}"]`)
+      .assignedNodes({ flatten: true })[0].innerText;
+    this.speech.text = comparison;
     window.speechSynthesis.speak(this.speech);
   }
 

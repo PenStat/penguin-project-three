@@ -10,6 +10,7 @@ export class FlashCard extends SimpleColors {
   constructor() {
     super();
     this.speak = false;
+    this.back = false;
     setTimeout(() => {
       import('./AnswerBox.js');
       import('./promptImg.js');
@@ -23,35 +24,9 @@ export class FlashCard extends SimpleColors {
       inverted: { type: Boolean },
       imgSrc: { type: String, reflect: true, attribute: 'img-src' },
       speak: { type: Boolean },
+      back: { type: Boolean },
     };
   }
-
-  // updated fires every time a property defined above changes
-  // this allows you to react to variables changing and use javascript to perform logic
-  // updated(changedProperties) {
-  //   changedProperties.forEach((oldValue, propName) => {
-  //   });
-  // }
-
-  // Lit life-cycle; this fires the 1st time the element is rendered on the screen
-  // this is a sign it is safe to make calls to this.shadowRoot
-  // firstUpdated(changedProperties) {
-  //   if (super.firstUpdated) {
-  //     super.firstUpdated(changedProperties);
-  //   }
-  // }
-
-  // HTMLElement life-cycle, element has been connected to the page / added or moved
-  // this fires EVERY time the element is moved
-  // connectedCallback() {
-  //   super.connectedCallback();
-  // }
-
-  // HTMLElement life-cycle, element has been removed from the page OR moved
-  // this fires every time the element moves
-  // disconnectedCallback() {
-  //   super.disconnectedCallback();
-  // }
 
   // CSS - specific to Lit
   static get styles() {
@@ -79,7 +54,7 @@ export class FlashCard extends SimpleColors {
   render() {
     return html`
       <image-prompt img-src="${this.imgSrc}"></image-prompt>
-      <answer-box ?speak=${this.speak}>
+      <answer-box ?back=${this.back} ?speak=${this.speak}>
         <div slot="front">
           <slot slot="front" name="front"></slot>
         </div>

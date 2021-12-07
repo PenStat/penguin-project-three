@@ -130,6 +130,11 @@ export class promptImg extends LitElement {
       if (propName === 'status' && this[propName] === 'pending') {
         this.answerIcon = false;
       }
+      if (propName === 'imgTag') {
+        this.shadowRoot
+          .querySelector('img')
+          .setAttribute('src', this[propName]);
+      }
     });
   }
 
