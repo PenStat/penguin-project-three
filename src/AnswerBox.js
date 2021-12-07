@@ -198,6 +198,9 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
         width: 50em;
         height: 62px;
       }
+      button#retry {
+        color: red;
+      }
       button:hover {
         opacity: 0.8;
       }
