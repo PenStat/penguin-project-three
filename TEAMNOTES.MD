@@ -56,6 +56,15 @@ Week of 11/7-11/14 In-Class & Office Hours
   - Front & Back of flashcard
   - Accessibility issues (if any) and fixes
 
+### What We're Going to Complete
+- Button for sound
+- Hone in the design
+- Checking for overlay correct
+- Changing question to answer
+- Implement in HAX
+- Choosing image in HAX?
+- Carousel?
+
 ## Status check ins
 These are dedicated status check-ins as this is a multi-week project
 ### Check-in 1
@@ -63,8 +72,10 @@ These are dedicated status check-ins as this is a multi-week project
 ### Check-in 2
 - See Meeting Notes from the Week of 11/07-11/14
 ### Check-in 3
--
--
+- We didn't really do anything...
+- We are fairly far ahead, so by taking a week off, we are now on track.
 ### Check-in 4
--
--
+- Fixed some graphical schtuff with our card
+- Added in speech button for user enabled speaking
+- Working on more styling stuff
+- Functionality largely done

@@ -27,9 +27,6 @@
       font-weight: bold;
       padding: 40px;
     }
-    .joyful {
-      font-size: 2em;
-    }
   </style>
   <title>Project 3: HAXTheWeb</title>
 </head>
@@ -46,16 +43,19 @@
       <p slot="back">fresa</p>
     </flash-card>
     <br><p>-------------------------------------</p><br>
-    <flash-card dark>
+    <flash-card dark img-src='https://loremflickr.com/320/240/strawberry'>
       <p slot="front">What is strawberry in Spanish</p>
       <p slot="back">fresa</p>
     </flash-card>
     <br><p>-------------------------------------</p><br>
+    
+    <br><p>-------------------------------------</p><br>
     <image-prompt></image-prompt>
-  </div>
+    <br><p>-------------------------------------</p><br>
   <script type="module">
     import "./Flash-Card.js";
     import "./src/AnswerBox.js";
+    import "./src/FlashCardSet.js";
   </script>
   <script>
     // just for demonstration
@@ -63,14 +63,17 @@
     function toggleLanguage() {
       count++
       const i18store = window.I18NManagerStore.requestAvailability();
-      if (count % 3 === 0) {
+      if (count % 4 === 0) {
         i18store.lang = "en";
       }
-      if (count % 3 === 1) {
+      if (count % 4 === 1) {
         i18store.lang = "es";
       }
-      if (count % 3 === 2) {
+      if (count % 4 === 2) {
         i18store.lang = "fr";
+      }
+      if (count % 4 === 3) {
+        i18store.lang = "ja";
       }
     }
   </script>

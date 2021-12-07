@@ -88,9 +88,13 @@ export class promptImg extends LitElement {
   constructor() {
     super();
     // Take answer and google image return
-    this.imgSrc = 'grey box';
-    //                                      W   H    Search Term
-    this.imgTag = `https://loremflickr.com/320/240/${this.imgSrc}`;
+    if (this.imgSrc === undefined) {
+      this.imgSrc = 'grey box';
+      //                                      W   H    Search Term
+      this.imgTag = `https://loremflickr.com/320/240/${this.imgSrc}`;
+    } else {
+      this.imgTag = this.imgSrc;
+    }
     this.status = 'pending';
     this.answerIcon = false;
     this.icon = '';
@@ -132,7 +136,11 @@ export class promptImg extends LitElement {
     if (super.firstUpdated) {
       super.firstUpdated(changedProperties);
     }
-    this.imgTag = `https://loremflickr.com/320/240/${this.imgSrc}`;
+    if (!this.imgSrc.includes('http')) {
+      this.imgTag = `https://loremflickr.com/320/240/${this.imgSrc}`;
+    } else {
+      this.imgTag = this.imgSrc;
+    }
   }
 
   // HTMLElement life-cycle, element has been connected to the page / added or moved
