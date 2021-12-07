@@ -21,6 +21,7 @@ export class FlashCard extends SimpleColors {
       ...super.properties,
       inverted: { type: Boolean },
       imgSrc: { type: String, reflect: true, attribute: 'img-src' },
+      status: { type: String, reflect: true },
     };
   }
 
@@ -73,11 +74,19 @@ export class FlashCard extends SimpleColors {
     ];
   }
 
+  statusChanged(e) {
+    console.log(e);
+    this.status = e.detail;
+  }
+
   // HTML - specific to Lit
   render() {
     return html`
-      <image-prompt img-src="${this.imgSrc}"></image-prompt>
-      <answer-box>
+      <image-prompt
+        img-src="${this.imgSrc}"
+        status="${this.status}"
+      ></image-prompt>
+      <answer-box @statusChange="${this.statusChanged}">
         <div slot="front">
           <slot slot="front" name="front"></slot>
         </div>
