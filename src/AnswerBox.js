@@ -53,8 +53,10 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
     this.dispatchEvent(
       new CustomEvent('statusChange', {
         detail: this.status,
+        bubbles: true,
       })
     );
+
     if (super.updated) {
       super.updated(changedProperties);
       changedProperties.forEach((oldValue, propName) => {
@@ -149,6 +151,12 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
     this.showResult = false;
     this.sideToShow = this.back ? 'back' : 'front';
     this.correctAnswer = '';
+    // this.dispatchEvent(
+    //   new CustomEvent('reset', {
+    //     detail: this.status,
+    //     bubbles: true,
+    //   })
+    // );
   }
 
   // CSS - specific to Lit
