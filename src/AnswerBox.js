@@ -189,7 +189,7 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
       }
       button#check {
         background-color: var(--simple-colors-default-theme-accent-10);
-        color: white;
+        color: var(--simple-colors-default-theme-grey-1);
         font-size: 14px;
         margin: none;
         padding: 14px;
