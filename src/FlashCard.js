@@ -52,7 +52,6 @@ export class FlashCard extends SimpleColors {
   }
 
   statusChanged(e) {
-    console.log(e);
     this.status = e.detail;
   }
 

@@ -142,7 +142,7 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
 
   // reset the interaction to the defaults
   resetCard() {
-    this.shadowRoot.querySelector('#check').disabled = false;
+    this.shadowRoot.querySelector('#check').disabled = true;
     this.shadowRoot.querySelector('input').disabled = false;
     this.userAnswer = '';
     this.status = 'pending';
