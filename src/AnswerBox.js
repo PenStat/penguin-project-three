@@ -166,13 +166,13 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
         justify-content: space-between;
         width: 300px;
         border-radius: 20px;
-        border: solid 1px gray;
-        background-color: var(--simple-colors-default-theme-accent-7);
+        border: solid 1px var(--simple-colors-default-theme-accent-5);
+        background-color: white;
         padding: 0;
       }
       .answer-section:focus-within {
-        border-color: #9ecaed;
-        box-shadow: 0 0 10px #9ecaed;
+        border-color: var(--simple-colors-default-theme-accent-6);
+        box-shadow: 0 0 10px var(--simple-colors-default-theme-accent-6);
       }
       input {
         border: none;
@@ -182,12 +182,13 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
         border-radius: 19px 0 0 19px;
         margin: 0;
         width: 11em;
+        background-color: white;
       }
       input:focus {
         outline: none;
       }
       button#check {
-        background-color: #0a7694;
+        background-color: var(--simple-colors-default-theme-accent-10);
         color: white;
         font-size: 14px;
         margin: none;
