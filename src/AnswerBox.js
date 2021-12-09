@@ -16,6 +16,7 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
     this.status = 'pending';
     this.correctAnswer = '';
     this.showResult = false;
+    this.speak = false;
     this.statusIcon = '';
     this.sideToShow = 'front';
     this.userAnswer = '';
@@ -44,6 +45,7 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
       status: { type: String, reflect: true },
       showResult: { type: Boolean, attribute: 'show-result', reflect: true },
       statusIcon: { type: String, attribute: false },
+      speak: { type: Boolean },
     };
   }
 
@@ -122,15 +124,13 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
   }
 
   speakWords() {
-    console.log('speak');
-    // const side = this.back ? 'front' : 'back';
-    // const comparison = this.shadowRoot
-    //   .querySelector(`[name="${side}"]`)
-    //   .assignedNodes({ flatten: true })[0]
-    //   .querySelector(`[name="${side}"]`)
-    //   .assignedNodes({ flatten: true })[0].innerText;
-    // console.log(this.shadowRoot.getElementById('front').innerHTML);
-    this.speech.text = this.shadowRoot.getElementById('question').innerHTML;
+    const side = this.back ? 'front' : 'back';
+    const comparison = this.shadowRoot
+      .querySelector(`[name="${side}"]`)
+      .assignedNodes({ flatten: true })[0]
+      .querySelector(`[name="${side}"]`)
+      .assignedNodes({ flatten: true })[0].innerText;
+    this.speech.text = comparison;
     window.speechSynthesis.speak(this.speech);
   }
 
@@ -166,13 +166,13 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
         justify-content: space-between;
         width: 300px;
         border-radius: 20px;
-        border: solid 1px gray;
-        background-color: var(--simple-colors-default-theme-accent-7);
+        border: solid 1px var(--simple-colors-default-theme-accent-5);
+        background-color: white;
         padding: 0;
       }
       .answer-section:focus-within {
-        border-color: #9ecaed;
-        box-shadow: 0 0 10px #9ecaed;
+        border-color: var(--simple-colors-default-theme-accent-6);
+        box-shadow: 0 0 10px var(--simple-colors-default-theme-accent-6);
       }
       input {
         border: none;
@@ -182,13 +182,14 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
         border-radius: 19px 0 0 19px;
         margin: 0;
         width: 11em;
+        background-color: white;
       }
       input:focus {
         outline: none;
       }
       button#check {
-        background-color: #0a7694;
-        color: white;
+        background-color: var(--simple-colors-default-theme-accent-10);
+        color: var(--simple-colors-default-theme-grey-1);
         font-size: 14px;
         margin: none;
         padding: 14px;
@@ -197,6 +198,9 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
         overflow: hidden;
         width: 50em;
         height: 62px;
+      }
+      button#retry {
+        color: red;
       }
       button:hover {
         opacity: 0.8;
@@ -208,7 +212,7 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
       }
       p {
         font-family: Helvetica;
-        color: var(--simple-colors-default-theme-grey-12);
+        color: var(--simple-colors-default-theme-accent-12);
         font-weight: normal;
         font-size: 20px;
       }
@@ -223,9 +227,9 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
         color: green;
       }
       simple-icon-lite {
-        --simple-icon-width: 50px;
-        --simple-icon-height: 50px;
-        color: red;
+        --simple-icon-width: 35px;
+        --simple-icon-height: 35px;
+        color: var(--simple-colors-default-theme-accent-10);
       }
 
       .sr-only {
@@ -235,6 +239,12 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
         width: 1px;
         height: 1px;
         overflow: hidden;
+      }
+
+      .retrySpeech {
+        display: block;
+        padding-left: 225px;
+        padding-top: 10px;
       }
     `;
   }
@@ -250,11 +260,6 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
         ${this.showResult
           ? html` <p>The correct answer is: ${this.correctAnswer}</p> `
           : ``}
-        <simple-icon-lite
-          icon="../av/volume-up"
-          @click="${this.speakWords}"
-          dark
-        ></simple-icon-lite>
       </div>
       <div class="answer-section">
         <input
@@ -272,9 +277,21 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
           ${this.t.checkAnswer}
         </button>
       </div>
-      <button id="retry" @click="${this.resetCard}">
-        ${this.t.restartActivity}
-      </button>
+      <div class="retrySpeech">
+        <simple-icon-lite
+          id="retry"
+          icon="refresh"
+          @click="${this.resetCard}"
+          dark
+        ></simple-icon-lite>
+        ${this.speak
+          ? html` <simple-icon-lite
+              icon="../av/volume-up"
+              @click="${this.speakWords}"
+              dark
+            ></simple-icon-lite>`
+          : ``}
+      </div>
     `;
   }
 }

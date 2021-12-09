@@ -35,7 +35,6 @@ export class promptImg extends LitElement {
       .backgroundbox {
         display: flex;
         background-color: var(--simple-colors-default-theme-accent-4);
-        border: 1px var(--simple-colors-default-theme-accent-6);
         border-radius: 19px 19px 0 0;
         height: 265px;
         width: 320px;
@@ -126,6 +125,11 @@ export class promptImg extends LitElement {
       }
       if (propName === 'status' && this[propName] === 'pending') {
         this.answerIcon = false;
+      }
+      if (propName === 'imgTag') {
+        this.shadowRoot
+          .querySelector('img')
+          .setAttribute('src', this[propName]);
       }
     });
   }

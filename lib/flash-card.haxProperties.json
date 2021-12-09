@@ -5,17 +5,41 @@
     "contentEditable": true,
     "gizmo": {
       "title": "Flashcard",
-      "description": "An element to improve the future of education",
-      "icon": "credit-card",
+      "description": "An element for practicing with flashcards",
+      "icon": "call-to-action",
       "color": "blue",
       "groups": ["Content", "Education"]
     },
     "settings": {
       "configure": [
         {
-          "property": "need",
-          "title": "Need",
-          "description": "What we all need",
+          "property": "imgSrc",
+          "title": "Image",
+          "description": "Image to use for the flashcard",
+          "inputMethod": "textfield"
+        },
+        {
+          "property": "speak",
+          "title": "Speak",
+          "description": "Add a button for speaking the answer",
+          "inputMethod": "boolean"
+        },
+        {
+          "property": "back",
+          "title": "Back",
+          "description": "Makes the front of the card the answer and the back becomes the question",
+          "inputMethod": "boolean"
+        },
+        {
+          "slot": "front",
+          "title": "Front of the Card",
+          "description": "Text for the front of the card or question",
+          "inputMethod": "textfield"
+        },
+        {
+          "slot": "back",
+          "title": "Back of the Card",
+          "description": "Text for the back of the card or answer",
           "inputMethod": "textfield"
         }
       ],
@@ -24,11 +48,11 @@
     },
     "demoSchema": [
       {
-        "tag": "flashcard",
+        "tag": "flash-card",
         "properties": {
-            "need": "the future"
+          "speak": true
         },
-        "content": "<p>Some internal slotted content</p>"
+        "content": "<p slot='front'>What is strawberry in Spanish</p><p slot='back'>fresa</p>"
       }
     ]
   }

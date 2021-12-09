@@ -9,6 +9,8 @@ export class FlashCard extends SimpleColors {
   // HTMLElement life-cycle, built in; use this for setting defaults
   constructor() {
     super();
+    this.speak = false;
+    this.back = false;
     setTimeout(() => {
       import('./AnswerBox.js');
       import('./promptImg.js');
@@ -21,36 +23,11 @@ export class FlashCard extends SimpleColors {
       ...super.properties,
       inverted: { type: Boolean },
       imgSrc: { type: String, reflect: true, attribute: 'img-src' },
+      speak: { type: Boolean },
+      back: { type: Boolean },
       status: { type: String, reflect: true },
     };
   }
-
-  // updated fires every time a property defined above changes
-  // this allows you to react to variables changing and use javascript to perform logic
-  // updated(changedProperties) {
-  //   changedProperties.forEach((oldValue, propName) => {
-  //   });
-  // }
-
-  // Lit life-cycle; this fires the 1st time the element is rendered on the screen
-  // this is a sign it is safe to make calls to this.shadowRoot
-  // firstUpdated(changedProperties) {
-  //   if (super.firstUpdated) {
-  //     super.firstUpdated(changedProperties);
-  //   }
-  // }
-
-  // HTMLElement life-cycle, element has been connected to the page / added or moved
-  // this fires EVERY time the element is moved
-  // connectedCallback() {
-  //   super.connectedCallback();
-  // }
-
-  // HTMLElement life-cycle, element has been removed from the page OR moved
-  // this fires every time the element moves
-  // disconnectedCallback() {
-  //   super.disconnectedCallback();
-  // }
 
   // CSS - specific to Lit
   static get styles() {
@@ -59,13 +36,13 @@ export class FlashCard extends SimpleColors {
       css`
         :host {
           display: block;
-          border: 2px solid var(--simple-colors-default-theme-accent-12);
+          border: 1px solid var(--simple-colors-default-theme-accent-6);
           min-width: 320px;
           border-radius: 20px;
           padding: 20px;
           width: 5em;
           background-color: var(--simple-colors-default-theme-accent-2);
-          box-shadow: 5px 5px 5px var(--simple-colors-default-theme-accent-1);
+          box-shadow: 0px 0px 5px var(--simple-colors-default-theme-accent-7);
         }
         p {
           color: var(--simple-colors-default-theme-accent-10);
@@ -85,7 +62,11 @@ export class FlashCard extends SimpleColors {
         img-src="${this.imgSrc}"
         status="${this.status}"
       ></image-prompt>
-      <answer-box @statusChange="${this.statusChanged}">
+      <answer-box
+        ?back=${this.back}
+        ?speak=${this.speak}
+        @statusChange="${this.statusChanged}"
+      >
         <div slot="front">
           <slot slot="front" name="front"></slot>
         </div>

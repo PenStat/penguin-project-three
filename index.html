@@ -36,14 +36,20 @@
     <li><a href="#">Flashcard Demo</a></li>
     <li><a href="/hax.html">HAX, card demo</a></li>
   </ul>
-  <button onclick="toggleLanguage();">Toggle language</button>
+  <button onclick="toggleLanguage();">Toggle language
+    <simple-icon id="icon" icon="flags:us" no-colorize></simple-icon>
+  </button>
   <div class="wrapper">
-    <flash-card>
+    <flash-card speak>
       <p slot="front">What is strawberry in Spanish</p>
       <p slot="back">fresa</p>
     </flash-card>
     <br><p>-------------------------------------</p><br>
-    <flash-card dark img-src='https://loremflickr.com/320/240/strawberry'>
+    <flash-card back speak dark img-src='https://loremflickr.com/320/240/strawberry'>
+      <p slot="front">What is strawberry in Spanish</p>
+      <p slot="back">fresa</p>
+    </flash-card>
+    <flash-card speak dark img-src='blueberry'>
       <p slot="front">What is strawberry in Spanish</p>
       <p slot="back">fresa</p>
     </flash-card>
@@ -68,11 +74,13 @@
       </ul>
     </flash-card-set>
     <p>Cards</p>
-
+    <script src="../../../node_modules/@lrnwebcomponents/deduping-fix/deduping-fix.js"></script>
   <script type="module">
     import "./Flash-Card.js";
     import "./src/AnswerBox.js";
     import "./src/FlashCardSet.js";
+    import "@lrnwebcomponents/simple-icon/lib/simple-icons.js";
+    import "@lrnwebcomponents/simple-icon/simple-icon.js";
   </script>
   <script>
     // just for demonstration
@@ -80,18 +88,24 @@
     function toggleLanguage() {
       count++
       const i18store = window.I18NManagerStore.requestAvailability();
+      var icon;
       if (count % 4 === 0) {
         i18store.lang = "en";
+        icon = "us";
       }
       if (count % 4 === 1) {
         i18store.lang = "es";
+        icon = "es";
       }
       if (count % 4 === 2) {
         i18store.lang = "fr";
+        icon = "fr";
       }
       if (count % 4 === 3) {
         i18store.lang = "ja";
+        icon = "jp";
       }
+      document.getElementById("icon").icon = `flags:${icon}`;
     }
   </script>
 </body>
