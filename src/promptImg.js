@@ -87,14 +87,8 @@ export class promptImg extends LitElement {
   // HTMLElement life-cycle, built in; use this for setting defaults
   constructor() {
     super();
-    // Take answer and google image return
-    if (this.imageKeyword === undefined) {
-      this.imageKeyword = 'grey box';
-      //                                      W   H    Search Term
-      this.imageTagSrc = `https://loremflickr.com/320/240/${this.imageKeyword}`;
-    } else {
-      this.imgTag = this.imageKeyword;
-    }
+    this.imgSrc = '';
+    this.imgKeyword = 'grey box';
     this.status = 'pending';
     this.answerIcon = false;
     this.icon = '';
@@ -105,7 +99,7 @@ export class promptImg extends LitElement {
     return {
       ...super.properties,
       imgSrc: { type: String, reflect: true, attribute: 'img-src' },
-      imgTag: { type: String },
+      imgKeyword: { type: String, attribute: 'img-keyword' },
       status: { type: String, reflect: true }, // Correct, incorrect, pending
       answerIcon: { type: Boolean, reflect: true },
       icon: { type: String },
@@ -127,11 +121,6 @@ export class promptImg extends LitElement {
       if (propName === 'status' && this[propName] === 'pending') {
         this.answerIcon = false;
       }
-      if (propName === 'imgTag') {
-        this.shadowRoot
-          .querySelector('img')
-          .setAttribute('src', this[propName]);
-      }
     });
   }
 
@@ -140,11 +129,6 @@ export class promptImg extends LitElement {
   firstUpdated(changedProperties) {
     if (super.firstUpdated) {
       super.firstUpdated(changedProperties);
-    }
-    if (!this.imageKeyword.includes('http')) {
-      this.imageTagSrc = `https://loremflickr.com/320/240/${this.imageKeyword}`;
-    } else {
-      this.imageTagSrc = this.imageKeyword;
     }
   }
 
@@ -166,7 +150,12 @@ export class promptImg extends LitElement {
       <div id="Nest">
         <div class="overlay">
           <div class="backgroundbox">
-            <img src="${this.imageTagSrc}" alt="default img" />
+            ${this.imgSrc !== ''
+              ? html`<img src="${this.imgSrc}" alt="default img" />`
+              : html`<img
+                  src="https://loremflickr.com/320/240/${this.imgKeyword}"
+                  alt="default img"
+                />`}
           </div>
         </div>
         ${this.answerIcon
