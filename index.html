@@ -38,12 +38,16 @@
   </ul>
   <button onclick="toggleLanguage();">Toggle language</button>
   <div class="wrapper">
-    <flash-card>
+    <flash-card speak>
       <p slot="front">What is strawberry in Spanish</p>
       <p slot="back">fresa</p>
     </flash-card>
     <br><p>-------------------------------------</p><br>
-    <flash-card dark img-src='https://loremflickr.com/320/240/strawberry'>
+    <flash-card back speak dark img-src='https://loremflickr.com/320/240/strawberry'>
+      <p slot="front">What is strawberry in Spanish</p>
+      <p slot="back">fresa</p>
+    </flash-card>
+    <flash-card speak dark img-src='blueberry'>
       <p slot="front">What is strawberry in Spanish</p>
       <p slot="back">fresa</p>
     </flash-card>
