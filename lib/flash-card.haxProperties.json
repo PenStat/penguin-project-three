@@ -6,7 +6,7 @@
     "gizmo": {
       "title": "Flashcard",
       "description": "An element for practicing with flashcards",
-      "icon": "credit-card",
+      "icon": "call-to-action",
       "color": "blue",
       "groups": ["Content", "Education"]
     },
