@@ -211,7 +211,7 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
       }
       p {
         font-family: Helvetica;
-        color: var(--simple-colors-default-theme-grey-12);
+        color: var(--simple-colors-default-theme-accent-12);
         font-weight: normal;
         font-size: 20px;
       }
@@ -228,9 +228,7 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
       simple-icon-lite {
         --simple-icon-width: 35px;
         --simple-icon-height: 35px;
-        color: red;
-        padding-left: 175px;
-        padding-top: 10px;
+        color: var(--simple-colors-default-theme-accent-10);
       }
 
       .sr-only {
@@ -240,6 +238,12 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
         width: 1px;
         height: 1px;
         overflow: hidden;
+      }
+
+      .retrySpeech {
+        display: block;
+        padding-left: 225px;
+        padding-top: 10px;
       }
     `;
   }
@@ -272,19 +276,21 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
           ${this.t.checkAnswer}
         </button>
       </div>
-      <simple-icon-lite
-        id="retry"
-        icon="refresh"
-        @click="${this.resetCard}"
-        dark
-      ></simple-icon-lite>
-      ${this.speak
-        ? html` <simple-icon-lite
-            icon="../av/volume-up"
-            @click="${this.speakWords}"
-            dark
-          ></simple-icon-lite>`
-        : ``}
+      <div class="retrySpeech">
+        <simple-icon-lite
+          id="retry"
+          icon="refresh"
+          @click="${this.resetCard}"
+          dark
+        ></simple-icon-lite>
+        ${this.speak
+          ? html` <simple-icon-lite
+              icon="../av/volume-up"
+              @click="${this.speakWords}"
+              dark
+            ></simple-icon-lite>`
+          : ``}
+      </div>
     `;
   }
 }
