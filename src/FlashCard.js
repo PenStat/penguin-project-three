@@ -26,6 +26,7 @@ export class FlashCard extends SimpleColors {
       speak: { type: Boolean },
       back: { type: Boolean },
       status: { type: String, reflect: true },
+      imageKeyword: { type: String, attribute: 'image-keyword' },
     };
   }
 
@@ -66,14 +67,15 @@ export class FlashCard extends SimpleColors {
   render() {
     return html`
       <image-prompt
+        image-keyword="${this.imageKeyword}"
         img-src="${this.imgSrc}"
         status="${this.status}"
       ></image-prompt>
       <answer-box
         ?back=${this.back}
         ?speak=${this.speak}
-        @statusChange="${this.statusChanged}">
-<!--        @reset='${this.reset}'-->
+        @statusChange="${this.statusChanged}"
+      >
         <div slot="front">
           <slot slot="front" name="front"></slot>
         </div>

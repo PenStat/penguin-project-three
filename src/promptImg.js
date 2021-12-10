@@ -87,13 +87,6 @@ export class promptImg extends LitElement {
   constructor() {
     super();
     // Take answer and google image return
-    if (this.imageKeyword === undefined) {
-      this.imageKeyword = 'grey box';
-      //                                      W   H    Search Term
-      this.imageTagSrc = `https://loremflickr.com/320/240/${this.imageKeyword}`;
-    } else {
-      this.imgTag = this.imageKeyword;
-    }
     this.status = 'pending';
     this.answerIcon = false;
     this.icon = '';
@@ -108,6 +101,8 @@ export class promptImg extends LitElement {
       status: { type: String, reflect: true }, // Correct, incorrect, pending
       answerIcon: { type: Boolean, reflect: true },
       icon: { type: String },
+      imageKeyword: { type: String, attribute: 'image-keyword' },
+      imageTagSrc: { type: String },
     };
   }
 
@@ -131,6 +126,11 @@ export class promptImg extends LitElement {
           .querySelector('img')
           .setAttribute('src', this[propName]);
       }
+      if (propName === 'imageKeyword') {
+        if (this.imageKeyword) {
+          this.imageTagSrc = `https://loremflickr.com/320/240/${this.imageKeyword}`;
+        }
+      }
     });
   }
 
@@ -139,11 +139,6 @@ export class promptImg extends LitElement {
   firstUpdated(changedProperties) {
     if (super.firstUpdated) {
       super.firstUpdated(changedProperties);
-    }
-    if (!this.imageKeyword.includes('http')) {
-      this.imageTagSrc = `https://loremflickr.com/320/240/${this.imageKeyword}`;
-    } else {
-      this.imageTagSrc = this.imageKeyword;
     }
   }
 
@@ -165,7 +160,7 @@ export class promptImg extends LitElement {
       <div id="Nest">
         <div class="overlay">
           <div class="backgroundbox">
-            <img src="${this.imageTagSrc}" alt="default img" />
+            <img src="${this.imageTagSrc}" alt="" />
           </div>
         </div>
         ${this.answerIcon
