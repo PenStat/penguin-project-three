@@ -117,14 +117,21 @@ export class FlashCardSet extends LitElement {
         transform: scale(2) translateY(100px) translateX(-10px);
       }
       .visible {
-        display: block;
         transform: scale(1);
-        transition: all 0.5s ease-in-out;
+        transition: transform 1s ease-in-out;
+        position: absolute;
+        top: 0;
+        left: 0;
       }
       .hidden {
-        display: none;
         transform: scale(0);
-        transition: all 0.5s ease-in-out;
+        transition: transform 1s ease-in-out;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      #content {
+        position: relative;
       }
     `;
   }
@@ -132,14 +139,16 @@ export class FlashCardSet extends LitElement {
   // HTML - specific to Lit
   render() {
     return html`
-      <div style='display: inline-flex'>
-        <simple-icon-lite icon='arrow-back' class='arrow-left' onclick='${this.changeVisible()}'></simple-icon-lite>
-        <div id="content"></div>
-        <simple-icon-lite icon='arrow-forward' class='arrow-right'></simple-icon-lite>
+      <div id='container'>
+        <div style='display: inline-flex'>
+          <simple-icon-lite icon='arrow-back' class='arrow-left' onclick='${this.changeVisible()}'></simple-icon-lite>
+          <div id="content"></div>
+          <simple-icon-lite icon='arrow-forward' class='arrow-right'></simple-icon-lite>
+        </div>
+        <!--      <br>-->
+        <!--      <button>Reset All</button>-->
+        <slot style="display: none"></slot>
       </div>
-<!--      <br>-->
-<!--      <button>Reset All</button>-->
-      <slot style="display: none"></slot>
     `;
   }
 
