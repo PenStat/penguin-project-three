@@ -6,7 +6,7 @@ export default {
   title: 'Flashcard',
   component: 'flash-card',
   argTypes: {
-    need: { control: 'text' },
+    back: { control: 'boolean' },
   },
 };
 
