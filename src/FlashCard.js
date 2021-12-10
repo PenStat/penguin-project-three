@@ -53,14 +53,8 @@ export class FlashCard extends SimpleColors {
   }
 
   statusChanged(e) {
-    console.log('status changed', e);
     this.status = e.detail;
   }
-
-  // reset(e) {
-  //   console.log('reset', e, this.speak);
-  //   this.status = e.detail;
-  // }
 
   // HTML - specific to Lit
   render() {
@@ -73,7 +67,6 @@ export class FlashCard extends SimpleColors {
         ?back=${this.back}
         ?speak=${this.speak}
         @statusChange="${this.statusChanged}">
-<!--        @reset='${this.reset}'-->
         <div slot="front">
           <slot slot="front" name="front"></slot>
         </div>

@@ -103,8 +103,8 @@ export class promptImg extends LitElement {
   static get properties() {
     return {
       ...super.properties,
-      imgSrc: { type: String, reflect: true, attribute: 'img-src' },
-      imgTag: { type: String },
+      imageKeyword: { type: String, reflect: true, attribute: 'img-src' },
+      imageTagSrc: { type: String },
       status: { type: String, reflect: true }, // Correct, incorrect, pending
       answerIcon: { type: Boolean, reflect: true },
       icon: { type: String },
