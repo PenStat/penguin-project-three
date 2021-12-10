@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
-import '@lrnwebcomponents/a11y-carousel/a11y-carousel.js';
+import '@lrnwebcomponents/simple-icon/lib/simple-icons.js';
+import '@lrnwebcomponents/simple-icon/lib/simple-icon-lite.js';
 
 export class FlashCardSet extends LitElement {
   static get tag() {
@@ -10,6 +11,7 @@ export class FlashCardSet extends LitElement {
   constructor() {
     super();
     this.questions = [];
+    this.currentQuestion = 0;
     setTimeout(() => {
       import('./FlashCard.js');
     }, 0);
@@ -18,51 +20,29 @@ export class FlashCardSet extends LitElement {
   // properties that you wish to use as data in HTML, CSS, and the updated life-cycle
   static get properties() {
     return {
-      amount: {
-        type: Number,
-      },
       questions: {
         type: Array,
       },
     };
   }
 
-  // CSS - specific to Lit
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-      }
-    `;
-  }
-
   updated(changedProperties) {
     if (super.firstUpdated) {
       super.firstUpdated(changedProperties);
     }
-    this.renderBR();
-  }
-
-  renderBR() {
-    this.getData();
-    console.log(this.questions);
-    for (let i = 0; i < this.questions.length; i += 2) {
-      console.log(this.questions[i], this.questions[i + 1], i / 2);
-      this.formatEl(this.questions[i], this.questions[i + 1], i / 2);
-    }
-  }
-
-  formatEl(front, back, number) {
-    // create a new element
-    const el = document.createElement('flash-card');
-    el.setAttribute('dark', '');
-    el.setAttribute('id', `${number}`);
-    // add the text
-    el.innerHTML = `
-      <p slot="front">${front}</p>
-      <p slot="back">${back}</p>`;
-    // append it to the parent
-    this.shadowRoot.querySelector('#content').appendChild(el);
+    this.renderTags();
+    this.shadowRoot.querySelector('.arrow-left').addEventListener('click', () => {
+      if (this.currentQuestion > 0) {
+        this.currentQuestion-=1;
+        this.changeVisible();
+      }
+    });
+    this.shadowRoot.querySelector('.arrow-right').addEventListener('click', () => {
+      if (this.currentQuestion < this.questions.length/2-1) {
+        this.currentQuestion+=1;
+        this.changeVisible();
+      }
+    });
   }
 
   getData() {
@@ -87,11 +67,88 @@ export class FlashCardSet extends LitElement {
     }
   }
 
+  renderTags() {
+    this.getData();
+    for (let i = 0; i < this.questions.length; i += 2) {
+      this.formatEl(this.questions[i], this.questions[i + 1], i / 2);
+    }
+  }
+
+  formatEl(front, back, number) {
+    // create a new element
+    const el = document.createElement('flash-card');
+    el.setAttribute('dark', '');
+    el.setAttribute('id', `card${number}`);
+    if (number !== 0) {
+      el.className = 'hidden';
+      // el.setAttribute('style', `display: none;`);
+    }
+    // add the text
+    el.innerHTML = `
+      <p slot="front">${front}</p>
+      <p slot="back">${back}</p>`;
+    // append it to the parent
+    this.shadowRoot.querySelector('#content').appendChild(el);
+  }
+
+  changeVisible() {
+    for (let i = 0; i < this.questions.length; i += 2) {
+      const el = this.shadowRoot.querySelector(`#card${i / 2}`);
+      if (i / 2 === this.currentQuestion) {
+        el.className = 'visible';
+        // el.setAttribute('style', `display: block;`);
+      } else {
+        el.className = 'hidden';
+        // el.setAttribute('style', `display: none;`);
+      }
+    }
+  }
+
+  // CSS - specific to Lit
+  static get styles() {
+    return css`
+      :host {
+        display: block;
+      }
+      .arrow-right {
+        transform: scale(2) translateY(100px) translateX(10px);
+      }
+      .arrow-left {
+        transform: scale(2) translateY(100px) translateX(-10px);
+      }
+      .visible {
+        transform: scale(1);
+        transition: transform 1s ease-in-out;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      .hidden {
+        transform: scale(0);
+        transition: transform 1s ease-in-out;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      #content {
+        position: relative;
+      }
+    `;
+  }
+
   // HTML - specific to Lit
   render() {
     return html`
-      <slot style="display: none"></slot>
-      <div id="content"></div>
+      <div id='container'>
+        <div style='display: inline-flex'>
+          <simple-icon-lite icon='arrow-back' class='arrow-left' onclick='${this.changeVisible()}'></simple-icon-lite>
+          <div id="content"></div>
+          <simple-icon-lite icon='arrow-forward' class='arrow-right'></simple-icon-lite>
+        </div>
+        <!--      <br>-->
+        <!--      <button>Reset All</button>-->
+        <slot style="display: none"></slot>
+      </div>
     `;
   }
 

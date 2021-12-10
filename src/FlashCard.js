@@ -38,11 +38,12 @@ export class FlashCard extends SimpleColors {
           display: block;
           border: 1px solid var(--simple-colors-default-theme-accent-6);
           min-width: 320px;
+          min-height: 364px;
           border-radius: 20px;
           padding: 20px;
           width: 5em;
           background-color: var(--simple-colors-default-theme-accent-2);
-          box-shadow: 0px 0px 5px var(--simple-colors-default-theme-accent-7);
+          box-shadow: 0 0 5px var(--simple-colors-default-theme-accent-7);
         }
         p {
           color: var(--simple-colors-default-theme-accent-10);
@@ -52,8 +53,14 @@ export class FlashCard extends SimpleColors {
   }
 
   statusChanged(e) {
+    console.log('status changed', e);
     this.status = e.detail;
   }
+
+  // reset(e) {
+  //   console.log('reset', e, this.speak);
+  //   this.status = e.detail;
+  // }
 
   // HTML - specific to Lit
   render() {
@@ -65,8 +72,8 @@ export class FlashCard extends SimpleColors {
       <answer-box
         ?back=${this.back}
         ?speak=${this.speak}
-        @statusChange="${this.statusChanged}"
-      >
+        @statusChange="${this.statusChanged}">
+<!--        @reset='${this.reset}'-->
         <div slot="front">
           <slot slot="front" name="front"></slot>
         </div>
