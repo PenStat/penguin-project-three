@@ -87,6 +87,12 @@ export class promptImg extends LitElement {
   constructor() {
     super();
     // Take answer and google image return
+    if (this.imageKeyword === undefined && this.imageTagSrc === undefined) {
+      //                                      W   H    Search Term
+      this.imageTagSrc = `https://loremflickr.com/320/240/grey box`;
+    } else if (this.imageKeyword !== undefined && this.imageTagSrc === undefined) {
+      this.imageTagSrc = `https://loremflickr.com/320/240/${this.imageKeyword}`;
+    }
     this.status = 'pending';
     this.answerIcon = false;
     this.icon = '';
@@ -96,13 +102,12 @@ export class promptImg extends LitElement {
   static get properties() {
     return {
       ...super.properties,
-      imageKeyword: { type: String, reflect: true, attribute: 'img-src' },
-      imageTagSrc: { type: String },
+      // imgSrc: { type: String, reflect: true, attribute: 'img-src' },
       status: { type: String, reflect: true }, // Correct, incorrect, pending
       answerIcon: { type: Boolean, reflect: true },
       icon: { type: String },
       imageKeyword: { type: String, attribute: 'image-keyword' },
-      imageTagSrc: { type: String },
+      imageTagSrc: { type: String, attribute: 'img-src' },
     };
   }
 
