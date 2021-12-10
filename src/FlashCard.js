@@ -59,7 +59,6 @@ export class FlashCard extends SimpleColors {
 
   // HTML - specific to Lit
   render() {
-    console.log(this.imgSrc);
     return html`
       <image-prompt
         image-keyword="${this.imageKeyword}"
