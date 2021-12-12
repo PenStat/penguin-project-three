@@ -1,12 +1,12 @@
 {
-  "name": "@lrnwebcomponents/flash-card",
+  "name": "@penstat2/flash-card",
   "description": "HAX Capable web component to build a better future",
   "license": "Apache-2.0",
   "author": "btopro",
   "version": "0.0.1",
   "repository": {
     "type": "git",
-    "url": "https://github.com/elmsln/project-3.git"
+    "url": "https://github.com/PenStat/penguin-project-three.git"
   },
   "scripts": {
     "lint": "eslint --ext .js,.html . --ignore-path .gitignore && prettier \"**/*.js\" --check --ignore-path .gitignore",
@@ -21,7 +21,6 @@
     "start": "web-dev-server"
   },
   "dependencies": {
-    "@lrnwebcomponents/a11y-carousel": "^4.0.4",
     "@lrnwebcomponents/i18n-manager": "^4.0.1",
     "@lrnwebcomponents/simple-colors": "^4.0.4",
     "@lrnwebcomponents/simple-icon": "^4.0.6",
