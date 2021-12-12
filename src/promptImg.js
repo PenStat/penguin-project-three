@@ -86,9 +86,8 @@ export class promptImg extends LitElement {
   // HTMLElement life-cycle, built in; use this for setting defaults
   constructor() {
     super();
-    // Take answer and google image return
-      //                                      W   H    Search Term
-    this.imageTagSrc = `https://loremflickr.com/320/240/grey box`;
+    this.imgSrc = '';
+    this.imgKeyword = 'grey box';
     this.status = 'pending';
     this.answerIcon = false;
     this.icon = '';
@@ -98,12 +97,11 @@ export class promptImg extends LitElement {
   static get properties() {
     return {
       ...super.properties,
-      // imgSrc: { type: String, reflect: true, attribute: 'img-src' },
+      imgSrc: { type: String, reflect: true, attribute: 'img-src' },
+      imgKeyword: { type: String, attribute: 'img-keyword' },
       status: { type: String, reflect: true }, // Correct, incorrect, pending
       answerIcon: { type: Boolean, reflect: true },
-      icon: { type: String },
-      imageKeyword: { type: String, attribute: 'image-keyword' },
-      imageTagSrc: { type: String, attribute: 'img-src' },
+      icon: { type: String }
     };
   }
 
@@ -122,16 +120,6 @@ export class promptImg extends LitElement {
       if (propName === 'status' && this[propName] === 'pending') {
         this.answerIcon = false;
       }
-      if (propName === 'imgTag') {
-        this.shadowRoot
-          .querySelector('img')
-          .setAttribute('src', this[propName]);
-      }
-      if (propName === 'imageKeyword') {
-        if (this.imageKeyword) {
-          this.imageTagSrc = `https://loremflickr.com/320/240/${this.imageKeyword}`;
-        }
-      }
     });
   }
 
@@ -140,13 +128,6 @@ export class promptImg extends LitElement {
   firstUpdated(changedProperties) {
     if (super.firstUpdated) {
       super.firstUpdated(changedProperties);
-    }
-    // Take answer and google image return
-    if (this.imageKeyword === "" && this.imageTagSrc === "") {
-      //                                      W   H    Search Term
-      this.imageTagSrc = `https://loremflickr.com/320/240/grey box`;
-    } else if (this.imageKeyword !== "" && this.imageTagSrc === "") {
-      this.imageTagSrc = `https://loremflickr.com/320/240/${this.imageKeyword}`;
     }
   }
 
@@ -168,7 +149,13 @@ export class promptImg extends LitElement {
       <div id="Nest">
         <div class="overlay">
           <div class="backgroundbox">
-            <img src="${this.imageTagSrc}" alt="" />
+            ${this.imgSrc !== ''
+              ? html`<img src="${this.imgSrc}" alt="" />`
+              : html`<img
+                  src="https://loremflickr.com/320/240/${this
+                    .imgKeyword}?lock=1"
+                  alt=""
+                />`}
           </div>
         </div>
         ${this.answerIcon

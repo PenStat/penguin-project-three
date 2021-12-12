@@ -13,10 +13,16 @@
     "settings": {
       "configure": [
         {
-          "property": "imgSrc",
-          "title": "Image",
-          "description": "Image to use for the flashcard",
+          "property": "imgKeyword",
+          "title": "Image Keyword",
+          "description": "A random image chosen based off your keyword. Overriden by Image Source.",
           "inputMethod": "textfield"
+        },
+        {
+          "property": "img-src",
+          "title": "Image Source",
+          "description": "Image file used for the card. Overrides Image Keyword.",
+          "inputMethod": "haxupload"
         },
         {
           "property": "speak",
