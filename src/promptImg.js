@@ -150,10 +150,11 @@ export class promptImg extends LitElement {
         <div class="overlay">
           <div class="backgroundbox">
             ${this.imgSrc !== ''
-              ? html`<img src="${this.imgSrc}" alt="default img" />`
+              ? html`<img src="${this.imgSrc}" alt="" />`
               : html`<img
-                  src="https://loremflickr.com/320/240/${this.imgKeyword}"
-                  alt="default img"
+                  src="https://loremflickr.com/320/240/${this
+                    .imgKeyword}?lock=1"
+                  alt=""
                 />`}
           </div>
         </div>

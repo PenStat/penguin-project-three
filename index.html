@@ -13,7 +13,6 @@
       margin: 0;
       padding: 50px;
       font-family: sans-serif;
-      background-color: aqua;
     }
     .wrapper {
       margin: 100px;
@@ -38,18 +37,22 @@
   </ul>
   <button onclick="toggleLanguage();">Toggle language</button>
   <div class="wrapper">
-    <flash-card speak>
-      <p slot="front">What is strawberry in Spanish</p>
-      <p slot="back">fresa</p>
+    <flash-card speak img-keyword='penguin'>
+      <p slot="front">What is penguin in Spanish</p>
+      <p slot="back">pinguino</p>
     </flash-card>
     <br><p>-------------------------------------</p><br>
-    <flash-card back speak dark img-src='https://loremflickr.com/320/240/strawberry'>
+    <flash-card back speak dark img-keyword='strawberry'>
       <p slot="front">What is strawberry in Spanish</p>
       <p slot="back">fresa</p>
     </flash-card>
-    <flash-card speak dark img-src='blueberry'>
+    <flash-card dark img-keyword='blueberry'>
       <p slot="front">What is strawberry in Spanish</p>
       <p slot="back">fresa</p>
+    </flash-card>
+    <flash-card img-src='./lib/bryan.jpeg' img-keyword="hello">
+      <p slot="front">What is Bryan in Spanish</p>
+      <p slot="back">Bryan</p>
     </flash-card>
     <br><p>-------------------------------------</p><br>
     

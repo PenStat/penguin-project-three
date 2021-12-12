@@ -10,6 +10,8 @@ export class FlashCard extends SimpleColors {
   constructor() {
     super();
     this.speak = false;
+    this.imgKeyword = '';
+    this.imgSrc = '';
     this.back = false;
     setTimeout(() => {
       import('./AnswerBox.js');
@@ -22,7 +24,8 @@ export class FlashCard extends SimpleColors {
     return {
       ...super.properties,
       inverted: { type: Boolean },
-      imgSrc: { type: String, reflect: true, attribute: 'img-src' },
+      imgSrc: { type: String, attribute: 'img-src' },
+      imgKeyword: { type: String, attribute: 'img-keyword' },
       speak: { type: Boolean },
       back: { type: Boolean },
       status: { type: String, reflect: true },
@@ -61,6 +64,7 @@ export class FlashCard extends SimpleColors {
     return html`
       <image-prompt
         img-src="${this.imgSrc}"
+        img-keyword="${this.imgKeyword}"
         status="${this.status}"
       ></image-prompt>
       <answer-box
