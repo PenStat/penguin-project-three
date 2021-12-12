@@ -20,6 +20,8 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
     this.statusIcon = '';
     this.sideToShow = 'front';
     this.userAnswer = '';
+    this.icon = '';
+    this.message = '';
     this.t = {
       yourAnswer: 'Your answer',
       checkAnswer: 'Check answer',
@@ -104,10 +106,12 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
       .assignedNodes({ flatten: true })[0]
       .querySelector(`[name="${side}"]`)
       .assignedNodes({ flatten: true })[0].innerText;
-    // this.speech.text = comparison;
-    // window.speechSynthesis.speak(this.speech);
     this.correct = this.equalsIgnoringCase(comparison);
     this.status = this.equalsIgnoringCase(comparison) ? 'correct' : 'incorrect';
+    this.icon = this.equalsIgnoringCase(comparison) ? 'check' : 'cancel';
+    this.message = this.equalsIgnoringCase(comparison)
+      ? 'Correct!'
+      : 'Incorrect!';
     this.showResult = !this.equalsIgnoringCase(comparison);
     // reverse so that it swaps which slot is shown
     this.correctAnswer = !this.back
@@ -144,13 +148,13 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
 
   // reset the interaction to the defaults
   resetCard() {
-    this.shadowRoot.querySelector('#check').disabled = true;
-    this.shadowRoot.querySelector('input').disabled = false;
+    this.showResult = false;
+    this.correct = false;
     this.userAnswer = '';
     this.status = 'pending';
-    this.showResult = false;
     this.sideToShow = this.back ? 'back' : 'front';
     this.correctAnswer = '';
+    this.shadowRoot.querySelector('input').disabled = false;
     // this.dispatchEvent(
     //   new CustomEvent('reset', {
     //     detail: this.status,
@@ -173,6 +177,7 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
         align-items: center;
         justify-content: space-between;
         width: 300px;
+        height: 45px;
         border-radius: 20px;
         border: solid 1px var(--simple-colors-default-theme-accent-5);
         background-color: white;
@@ -186,7 +191,7 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
         border: none;
         padding: 10px;
         font-size: 14px;
-        height: 42px;
+        height: 25px;
         border-radius: 19px 0 0 19px;
         margin: 0;
         width: 11em;
@@ -200,12 +205,12 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
         color: var(--simple-colors-default-theme-grey-1);
         font-size: 14px;
         margin: none;
-        padding: 14px;
+        padding: 0px;
         border-radius: 0 19px 19px 0;
         border: none;
         overflow: hidden;
         width: 50em;
-        height: 62px;
+        height: 45px;
       }
       button#retry {
         color: red;
@@ -223,6 +228,7 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
         color: var(--simple-colors-default-theme-accent-12);
         font-weight: normal;
         font-size: 20px;
+        text-align: center;
       }
       :host([side-to-show='front']) slot[name='back'] {
         display: none;
@@ -231,9 +237,22 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
         display: none;
       }
 
-      :host([status='correct']) simple-icon-lite {
+      :host([status='correct']) #status-message {
         color: green;
       }
+
+      :host([status='correct']) #status-icon {
+        color: green;
+      }
+
+      :host([status='incorrect']) #status-message {
+        color: red;
+      }
+
+      :host([status='incorrect']) #status-icon {
+        color: red;
+      }
+
       simple-icon-lite {
         --simple-icon-width: 35px;
         --simple-icon-height: 35px;
@@ -250,9 +269,29 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
       }
 
       .retrySpeech {
-        display: block;
-        padding-left: 225px;
+        display: flex;
+        width: 100%;
+        justify-content: flex-end;
         padding-top: 10px;
+      }
+
+      #status-message {
+        margin-right: 15px;
+        display: flex;
+        align-items: center;
+      }
+
+      #status-icon {
+        --simple-icon-height: 25px;
+        --simple-icon-width: 25px;
+      }
+
+      input:disabled {
+        color: var(--simple-colors-default-theme-accent-12);
+      }
+
+      .answer-message {
+        font-size: 10pt;
       }
     `;
   }
@@ -265,8 +304,10 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
           <slot name="front" id="front"></slot>
           <slot name="back" id="back"></slot>
         </p>
-        ${this.showResult
-          ? html` <p>The correct answer is: ${this.correctAnswer}</p> `
+        ${this.showResult || this.correct
+          ? html`<p class="answer-message">
+              Correct Answer: ${this.correctAnswer}
+            </p>`
           : ``}
       </div>
       <div class="answer-section">
@@ -277,21 +318,23 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
           @input="${this.inputChanged}"
           .value="${this.userAnswer}"
         />
-        <button
-          id="check"
-          ?disabled="${this.userAnswer === ''}"
-          @click="${this.checkUserAnswer}"
-        >
-          ${this.t.checkAnswer}
-        </button>
+        ${this.status === 'pending'
+          ? html`<button
+              id="check"
+              ?disabled="${this.userAnswer === ''}"
+              @click="${this.checkUserAnswer}"
+            >
+              ${this.t.checkAnswer}
+            </button>`
+          : html`<span id="status-message"
+              ><simple-icon-lite
+                id="status-icon"
+                icon="${this.icon}"
+              ></simple-icon-lite
+              >${this.message}</span
+            >`}
       </div>
       <div class="retrySpeech">
-        <simple-icon-lite
-          id="retry"
-          icon="refresh"
-          @click="${this.resetCard}"
-          dark
-        ></simple-icon-lite>
         ${this.speak
           ? html` <simple-icon-lite
               icon="../av/volume-up"
@@ -299,6 +342,12 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
               dark
             ></simple-icon-lite>`
           : ``}
+        <simple-icon-lite
+          id="retry"
+          icon="refresh"
+          @click="${this.resetCard}"
+          dark
+        ></simple-icon-lite>
       </div>
     `;
   }
