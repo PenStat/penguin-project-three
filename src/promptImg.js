@@ -101,7 +101,7 @@ export class promptImg extends LitElement {
       imgKeyword: { type: String, attribute: 'img-keyword' },
       status: { type: String, reflect: true }, // Correct, incorrect, pending
       answerIcon: { type: Boolean, reflect: true },
-      icon: { type: String },
+      icon: { type: String }
     };
   }
 

@@ -29,6 +29,7 @@ export class FlashCard extends SimpleColors {
       speak: { type: Boolean },
       back: { type: Boolean },
       status: { type: String, reflect: true },
+      imageKeyword: { type: String, attribute: 'image-keyword' },
     };
   }
 
@@ -41,11 +42,12 @@ export class FlashCard extends SimpleColors {
           display: block;
           border: 1px solid var(--simple-colors-default-theme-accent-6);
           min-width: 320px;
+          min-height: 364px;
           border-radius: 20px;
           padding: 20px;
           width: 5em;
           background-color: var(--simple-colors-default-theme-accent-2);
-          box-shadow: 0px 0px 5px var(--simple-colors-default-theme-accent-7);
+          box-shadow: 0 0 5px var(--simple-colors-default-theme-accent-7);
         }
         p {
           color: var(--simple-colors-default-theme-accent-10);
@@ -55,7 +57,6 @@ export class FlashCard extends SimpleColors {
   }
 
   statusChanged(e) {
-    console.log(e);
     this.status = e.detail;
   }
 
@@ -63,6 +64,7 @@ export class FlashCard extends SimpleColors {
   render() {
     return html`
       <image-prompt
+        image-keyword="${this.imageKeyword}"
         img-src="${this.imgSrc}"
         img-keyword="${this.imgKeyword}"
         status="${this.status}"
