@@ -19,7 +19,7 @@
           "inputMethod": "textfield"
         },
         {
-          "property": "imgSrc",
+          "property": "img-src",
           "title": "Image Source",
           "description": "Image file used for the card. Overrides Image Keyword.",
           "inputMethod": "haxupload"

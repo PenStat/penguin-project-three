@@ -24,8 +24,7 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
     this.message = '';
     this.t = {
       yourAnswer: 'Your answer',
-      checkAnswer: 'Check answer',
-      restartActivity: 'Restart activity',
+      checkAnswer: 'Check answer'
     };
     this.registerLocalization({
       context: this,
