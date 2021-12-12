@@ -6,13 +6,30 @@ import '../Flash-Card.js';
 describe('FlashCard', () => {
   let element;
   beforeEach(async () => {
-    element = await fixture(html`<flash-card></flash-card>`);
+    element = await fixture(html`<flash-card>
+      <p slot="front">What is Bryan in Spanish</p>
+      <p slot="back">Bryan</p>
+    </flash-card>`);
   });
 
-  it('renders a h1', () => {
-    const h1 = element.shadowRoot.querySelector('h1');
-    expect(h1).to.exist;
-    expect(h1.textContent).to.equal('cool');
+  it('renders the image-prompt', () => {
+    const img = element.shadowRoot.querySelector('image-prompt');
+    expect(img).to.exist;
+  });
+
+  it('renders the answer-box', () => {
+    const ans = element.shadowRoot.querySelector('answer-box');
+    expect(ans).to.exist;
+  });
+
+  it('renders the question', () => {
+    const q = element.querySelector('p[slot="front"]');
+    expect(q).to.exist;
+  });
+
+  it('read the answer', () => {
+    const a = element.querySelector('p[slot="back"]');
+    expect(a).to.exist;
   });
 
   it('passes the a11y audit', async () => {
