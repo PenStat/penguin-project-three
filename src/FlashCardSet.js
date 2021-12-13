@@ -63,34 +63,23 @@ export class FlashCardSet extends SimpleColors {
     const questionData = ['','','',''];
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < slotData2.length; i++) {
-      // console.log(slotData2[i], i, i % 2);
       if (i % 2 === 1) {
         // eslint-disable-next-line no-plusplus
         for (let j = 0; j < slotData2[i].childNodes.length; j++) {
-          // console.log(slotData2[i]);
-          // console.log(slotData2[i].childNodes);
           if (j % 2 === 1) {
-            // console.log(slotData2[i].childNodes[j]);
-            // console.log(slotData2[i].childNodes[j].slot);
-            // console.log(slotData2[i].childNodes[j].innerHTML);
             const {slot} = slotData2[i].childNodes[j];
             if (slot === 'front') {
-              // console.log('front');
               questionData[0] = slotData2[i].childNodes[j].innerHTML;
             }
             if (slot === 'back') {
-              // console.log('back');
               questionData[1] = slotData2[i].childNodes[j].innerHTML;
             }
             if (slot === 'image') {
-              // console.log('image');
               questionData[2] = slotData2[i].childNodes[j].innerHTML;
             }
             if (slot === 'attributes') {
-              // console.log('tags');
               questionData[3] = slotData2[i].childNodes[j].innerHTML;
             }
-            // console.log(slotData2[i].childNodes[j].childNodes);
           }
         }
         // eslint-disable-next-line no-plusplus
@@ -117,11 +106,9 @@ export class FlashCardSet extends SimpleColors {
     // console.log(this.currentQuestion, this.questions, this.cardLength);
     // create a new element
     const el = document.createElement('flash-card');
-    // el.setAttribute('dark', '');
     el.setAttribute('id', `card${number}`);
     if (number !== 0) {
       el.className = 'hidden';
-      // el.setAttribute('style', `display: none;`);
     }
     // add the text
     el.innerHTML = `
@@ -150,10 +137,8 @@ export class FlashCardSet extends SimpleColors {
       const el = this.shadowRoot.querySelector(`#card${i / this.cardLength}`);
       if (i / this.cardLength === this.currentQuestion) {
         el.className = 'visible';
-        // el.setAttribute('style', `display: block;`);
       } else {
         el.className = 'hidden';
-        // el.setAttribute('style', `display: none;`);
       }
     }
   }
@@ -199,8 +184,6 @@ export class FlashCardSet extends SimpleColors {
           <div id="content"></div>
           <simple-icon-lite icon='arrow-forward' class='arrow-right'></simple-icon-lite>
         </div>
-        <!--      <br>-->
-        <!--      <button>Reset All</button>-->
         <slot style="display: none"></slot>
       </div>
     `;
