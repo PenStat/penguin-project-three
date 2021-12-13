@@ -49,17 +49,8 @@ export class FlashCardSet extends SimpleColors {
   }
 
   getData() {
-    // const slotData = this.shadowRoot
-    //   .querySelector(`slot`)
-    //   .assignedNodes({ flatten: true })[1]
-    //   .textContent.split('\n');
     const slotData2 = this.shadowRoot
       .querySelector(`slot`).assignedNodes({ flatten: true })[1].childNodes;
-    // this.cardLength = (this.shadowRoot
-    //   .querySelector(`slot`).assignedNodes({ flatten: true })[1].childNodes[1].childNodes.length - 1) / 2;
-
-    // console.log(this.shadowRoot.querySelector(`slot`).assignedNodes({ flatten: true })[1].childNodes);
-
     const questionData = ['','','',''];
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < slotData2.length; i++) {
