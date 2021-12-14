@@ -35,6 +35,12 @@
           "title": "Speak",
           "description": "Add a button for speaking the answer",
           "inputMethod": "boolean"
+        },
+        {
+          "property": "listen",
+          "title": "Listen",
+          "description": "Add a button for listening for the user's input. Experimental and only works on Chrome Desktop for now.",
+          "inputMethod": "boolean"
         }
       ],
       "advanced": [
@@ -69,7 +75,8 @@
         "tag": "flash-card",
         "properties": {
           "speak": true,
-          "img-source": "https://hips.hearstapps.com/clv.h-cdn.co/assets/15/22/1432664914-strawberry-facts1.jpg"
+          "img-source": "https://hips.hearstapps.com/clv.h-cdn.co/assets/15/22/1432664914-strawberry-facts1.jpg",
+          "listen": true
         },
         "content": "<p slot='front'>What is strawberry in Spanish</p><p slot='back'>fresa</p>"
       }

@@ -10,6 +10,7 @@ export class FlashCard extends SimpleColors {
   constructor() {
     super();
     this.speak = false;
+    this.listen = false;
     this.imgKeyword = '';
     this.imgSource = '';
     this.back = false;
@@ -27,6 +28,7 @@ export class FlashCard extends SimpleColors {
       imgSource: { type: String, attribute: 'img-source', reflect: true },
       imgKeyword: { type: String, attribute: 'img-keyword' },
       speak: { type: Boolean },
+      listen: { type: Boolean },
       back: { type: Boolean },
       status: { type: String, reflect: true },
     };
@@ -75,6 +77,7 @@ export class FlashCard extends SimpleColors {
       <answer-box
         ?back=${this.back}
         ?speak=${this.speak}
+        ?listen=${this.listen}
         @statusChange="${this.statusChanged}"
       >
         <div slot="front">
