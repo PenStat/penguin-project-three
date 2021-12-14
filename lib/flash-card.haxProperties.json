@@ -6,36 +6,12 @@
     "gizmo": {
       "title": "Flashcard",
       "description": "An element for practicing with flashcards",
-      "icon": "call-to-action",
+      "icon": "av:call-to-action",
       "color": "blue",
       "groups": ["Content", "Education"]
     },
     "settings": {
       "configure": [
-        {
-          "property": "imgKeyword",
-          "title": "Image Keyword",
-          "description": "A random image chosen based off your keyword. Overriden by Image Source.",
-          "inputMethod": "textfield"
-        },
-        {
-          "property": "img-src",
-          "title": "Image Source",
-          "description": "Image file used for the card. Overrides Image Keyword.",
-          "inputMethod": "haxupload"
-        },
-        {
-          "property": "speak",
-          "title": "Speak",
-          "description": "Add a button for speaking the answer",
-          "inputMethod": "boolean"
-        },
-        {
-          "property": "back",
-          "title": "Back",
-          "description": "Makes the front of the card the answer and the back becomes the question",
-          "inputMethod": "boolean"
-        },
         {
           "slot": "front",
           "title": "Front of the Card",
@@ -47,16 +23,53 @@
           "title": "Back of the Card",
           "description": "Text for the back of the card or answer",
           "inputMethod": "textfield"
+        },
+        {
+          "property": "imgSource",
+          "title": "Image Source",
+          "description": "Image file used for the card. Overrides Image Keyword.",
+          "inputMethod": "haxupload"
+        },
+        {
+          "property": "speak",
+          "title": "Speak",
+          "description": "Add a button for speaking the answer",
+          "inputMethod": "boolean"
         }
       ],
       "advanced": [
+        {
+          "property": "imgKeyword",
+          "title": "Image Keyword",
+          "description": "A random image chosen based off your keyword. Overriden by Image Source.",
+          "inputMethod": "textfield"
+        },
+        {
+          "property": "back",
+          "title": "Back",
+          "description": "Makes the front of the card the answer and the back becomes the question",
+          "inputMethod": "boolean"
+        },
+        {
+          "property": "dark",
+          "title": "Dark",
+          "description": "Makes the card dark mode",
+          "inputMethod": "boolean"
+        },
+        {
+          "property": "accentColor",
+          "title": "Accent Color",
+          "description": "Changes the accent color of the card",
+          "inputMethod": "colorpicker"
+        }
       ]
     },
     "demoSchema": [
       {
         "tag": "flash-card",
         "properties": {
-          "speak": true
+          "speak": true,
+          "img-source": "https://hips.hearstapps.com/clv.h-cdn.co/assets/15/22/1432664914-strawberry-facts1.jpg"
         },
         "content": "<p slot='front'>What is strawberry in Spanish</p><p slot='back'>fresa</p>"
       }

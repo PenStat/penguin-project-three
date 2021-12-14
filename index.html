@@ -71,7 +71,7 @@
       </li>
       <li>
         <p slot="back">persona</p>
-        <p slot="front">What is people in Spanish?</p>
+        <p slot="front">What is person in Spanish?</p>
         <p slot="image">https://loremflickr.com/320/240/manequin</p>
         <p slot="attributes">speak dark</p>
       </li>
@@ -79,27 +79,32 @@
   </flash-card-set>
     <script src="node_modules/@lrnwebcomponents/deduping-fix/deduping-fix.js"></script>
     <br><p>-------------------------------------</p><br>
-    <flash-card speak>
-      <p slot="front">What is strawberry in Spanish?</p>
-      <p slot="back">fresa</p>
-    </flash-card>
-    <br><p>-------------------------------------</p><br>
-    <flash-card back speak dark img-src='https://loremflickr.com/320/240/strawberry'>
-      <p slot="front">What is strawberry in Spanish?</p>
-      <p slot="back">fresa</p>
-    </flash-card>
-    <br><p>-------------------------------------</p><br>
-    <flash-card speak dark img-keyword='blueberry'>
-      <p slot="front">What is strawberry in Spanish?</p>
-      <p slot="back">fresa</p>
-    </flash-card>
-    <flash-card img-src='./lib/bryan.jpeg' img-keyword="hello">
-      <p slot="front">What is Bryan in Spanish</p>
-      <p slot="back">Bryan</p>
-    </flash-card>
-    <br><p>-------------------------------------</p><br>
-    <image-prompt></image-prompt>
-    <br><p>-------------------------------------</p><br>
+    <script>
+      const jsonBlob = {
+        "fronts": ["What is strawberry in Spanish?", "What is penguin in Spanish?", "What is strawberry in Spanish?", "What is Bryan in Spanish?"],
+        "backs": ["fresa", "pinguino", "fresa", "bryan"],
+        "images": ["strawberry", "", "strawberry", "./lib/bryan.jpeg"],
+        "speak": [true, false, true, true],
+        "back": [false, false, true, false],
+        "dark": [false, false, false, true]
+      }
+      var wrapper = document.querySelector('.wrapper');
+      jsonBlob['fronts'].map((card, i) => {
+        let element = document.createElement('flash-card');
+        jsonBlob['speak'][i] ? element.setAttribute('speak', '') : element.removeAttribute('speak');
+        jsonBlob['back'][i] ? element.setAttribute('back', '') : element.removeAttribute('back');
+        jsonBlob['dark'][i] ? element.setAttribute('dark', '') : element.removeAttribute('dark');
+        if (jsonBlob['images'][i] === './lib/bryan.jpeg') {
+          element.setAttribute('img-source', jsonBlob['images'][i]);
+        }
+        element.setAttribute('img-keyword', jsonBlob['images'][i]);
+        element.innerHTML = `
+          <p slot="front">${jsonBlob['fronts'][i]}</p>
+          <p slot="back">${jsonBlob['backs'][i]}</p>
+        `
+        wrapper.appendChild(element);
+      });
+    </script>
   </div>
   <script type="module">
     import "./Flash-Card.js";

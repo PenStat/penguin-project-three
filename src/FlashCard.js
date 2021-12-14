@@ -11,7 +11,7 @@ export class FlashCard extends SimpleColors {
     super();
     this.speak = false;
     this.imgKeyword = '';
-    this.imgSrc = '';
+    this.imgSource = '';
     this.back = false;
     setTimeout(() => {
       import('./AnswerBox.js');
@@ -24,7 +24,7 @@ export class FlashCard extends SimpleColors {
     return {
       ...super.properties,
       inverted: { type: Boolean },
-      imgSrc: { type: String, attribute: 'img-src' },
+      imgSource: { type: String, attribute: 'img-source', reflect: true },
       imgKeyword: { type: String, attribute: 'img-keyword' },
       speak: { type: Boolean },
       back: { type: Boolean },
@@ -41,12 +41,13 @@ export class FlashCard extends SimpleColors {
           display: block;
           border: 1px solid var(--simple-colors-default-theme-accent-6);
           min-width: 320px;
-          min-height: 364px;
+          min-height: 155px;
           border-radius: 20px;
           padding: 20px;
           width: 5em;
           background-color: var(--simple-colors-default-theme-accent-2);
           box-shadow: 0 0 5px var(--simple-colors-default-theme-accent-7);
+          margin: 10px;
         }
         p {
           color: var(--simple-colors-default-theme-accent-10);
@@ -62,11 +63,15 @@ export class FlashCard extends SimpleColors {
   // HTML - specific to Lit
   render() {
     return html`
-      <image-prompt
-        img-src="${this.imgSrc}"
-        img-keyword="${this.imgKeyword}"
-        status="${this.status}"
-      ></image-prompt>
+      ${!this.imgSource && !this.imgKeyword
+      ? ``
+      : html`
+        <image-prompt
+          img-src="${this.imgSource}"
+          img-keyword="${this.imgKeyword}"
+          status="${this.status}"
+        ></image-prompt>
+      `}
       <answer-box
         ?back=${this.back}
         ?speak=${this.speak}

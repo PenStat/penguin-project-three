@@ -154,12 +154,6 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
     this.sideToShow = this.back ? 'back' : 'front';
     this.correctAnswer = '';
     this.shadowRoot.querySelector('input').disabled = false;
-    // this.dispatchEvent(
-    //   new CustomEvent('reset', {
-    //     detail: this.status,
-    //     bubbles: true,
-    //   })
-    // );
   }
 
   // CSS - specific to Lit
@@ -278,15 +272,12 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
         margin-right: 15px;
         display: flex;
         align-items: center;
+        font-family: Helvetica;
       }
 
       #status-icon {
         --simple-icon-height: 25px;
         --simple-icon-width: 25px;
-      }
-
-      input:disabled {
-        color: var(--simple-colors-default-theme-accent-12);
       }
 
       .answer-message {
@@ -336,14 +327,18 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
       <div class="retrySpeech">
         ${this.speak
           ? html` <simple-icon-lite
+              tabindex="0"
               icon="../av/volume-up"
+              @keypress="${(e) => e.key === 'Enter' ? this.speakWords() : ''}"
               @click="${this.speakWords}"
               dark
             ></simple-icon-lite>`
           : ``}
         <simple-icon-lite
+          tabindex="0"
           id="retry"
           icon="refresh"
+          @keypress="${(e) => e.key === 'Enter' ? this.resetCard() : ''}"
           @click="${this.resetCard}"
           dark
         ></simple-icon-lite>
