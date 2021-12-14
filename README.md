@@ -16,7 +16,69 @@ yarn install
 yarn start
 # requires node 10 & npm 6 or higher
 ```
-Navigate to the HAX page to see it in context. Make sure to change `rename-me` in ALL parts of the repo to your project name.
+## Using `<flash-card>`
+Example slotted data
+```
+<p slot="front">What is strawberry in Spanish?</p>
+<p slot="back">fresa</p>
+```
+We use named slots to read data. "front" is the question, and "back" is the answer.
+The element also has four attributes, `dark`, `back`, `speak` and `img-src`.
+### `dark`
+Dark mode for the card. We use simple-colors from elmsln to achieve this.
+### `back`
+Shows the back of the card first.
+### `speak`
+A speech icon will appear that, when clicked, will read out the text on the card.
+### `img-src=`
+By defulat, the image rendered is a grey box. You can supply a keyword or url for an image to be rendered in the card.
+
+## Using `<flash-card-set>`
+Example usage
+```
+<flash-card-set>
+  <ul>
+    <li>
+      <p slot="front">What is strawberry in Spanish?</p>
+      <p slot="back">fresa</p>
+      <p slot="image">https://loremflickr.com/320/240/strawberry</p>
+    </li>
+    <li>
+      <p slot="image">https://loremflickr.com/320/240/food</p>
+      <p slot="attributes">speak</p>
+      <p slot="front">What is food in Spanish?</p>
+      <p slot="back">comida</p>
+    </li>
+    <li>
+      <p slot="back">persona</p>
+      <p slot="front">What is person in Spanish?</p>
+      <p slot="image">https://loremflickr.com/320/240/manequin</p>
+      <p slot="attributes">speak dark</p>
+    </li>
+  </ul>
+</flash-card-set>
+```
+This code renders a set of three flash cards, visible one at a time, with the above data. The tag relies on `<ul>` and
+`<li>` tags for organization, so those are required. The tag also requires named slots. At a minimum, it requires
+`slot="back` and `slot="front"`. `slot="image` and `slot="attributes"` are optional.
+
+###`slot="front`
+The question to be rendered
+
+###`slot="back`
+The answer to the question
+
+###`slot="image`
+The inner HTML for this should be the keyword or url for an image to be rendered in the card.
+
+###`slot="atributes`
+The inner HTML for this should be a space separated list of attributes to be applied to the card. The only options are 
+`dark`, `speak`, and `back`.
+
+### Behavior
+The cards in the set are separate from each other, and each card 'saves' its state. The set element
+renders each card separately, so each card has its own state.
+
 ## Scripts
 
 - `start` runs your app for development, reloading on file changes
