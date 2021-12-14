@@ -11,12 +11,16 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
   }
 
   constructor() {
+    var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+    var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
+    var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent;
     super();
     this.back = false;
     this.status = 'pending';
     this.correctAnswer = '';
     this.showResult = false;
     this.speak = false;
+    this.listen = false;
     this.statusIcon = '';
     this.sideToShow = 'front';
     this.userAnswer = '';
@@ -31,10 +35,14 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
       localesPath: new URL('../locales/', import.meta.url).href,
       locales: ['es', 'fr', 'ja'],
     });
+    // text-to-speech
     this.speech = new SpeechSynthesisUtterance();
     this.speech.lang = navigator.language.substring(0, 2); // uses language of the browser
     this.i18store = window.I18NManagerStore.requestAvailability();
     this.speech.lang = this.i18store.lang;
+    // speech-to-text
+    this.recognition = new SpeechRecognition();
+    this.speechRecognitionList = new SpeechGrammarList();
   }
 
   static get properties() {
@@ -47,6 +55,7 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
       showResult: { type: Boolean, attribute: 'show-result', reflect: true },
       statusIcon: { type: String, attribute: false },
       speak: { type: Boolean },
+      listen: { type: Boolean },
     };
   }
 
@@ -78,24 +87,69 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
     if (super.firstUpdated) {
       super.firstUpdated(changedProperties);
     }
-    const btn = this.shadowRoot.querySelector('#check');
-    this.shadowRoot
-      .querySelector('#answer')
-      .addEventListener('keyup', event => {
-        if (event.keyCode === 13) {
-          event.preventDefault();
-          btn.click();
-        }
-      });
   }
 
   // Need this instead of .toUpperCase() for i18n
   equalsIgnoringCase(text) {
     return (
-      text.localeCompare(this.userAnswer, undefined, {
+      text.localeCompare(this.shadowRoot.querySelector('input').value, undefined, {
         sensitivity: 'base',
       }) === 0
     );
+  }
+
+  recognizeSpeech() {
+    this.correctAnswer = !this.back
+      ? this.shadowRoot
+          .querySelector(`[name="back"]`)
+          .assignedNodes({ flatten: true })[0]
+          .querySelector(`[name="back"]`)
+          .assignedNodes({ flatten: true })[0].innerText
+      : this.shadowRoot
+          .querySelector(`[name="front"]`)
+          .assignedNodes({ flatten: true })[0]
+          .querySelector(`[name="front"]`)
+          .assignedNodes({ flatten: true })[0].innerText;
+    var grammar = `#JSGF V1.0; grammar answer; public <answer> = ${this.correctAnswer} ;`;
+    this.speechRecognitionList.addFromString(grammar, 1);
+    this.recognition.grammars = this.speechRecognitionList;
+    this.recognition.continuous = false;
+    if (this.speech.lang === 'en') {
+      this.recognition.lang = 'en-US';
+    } 
+    if (this.speech.lang === 'es') {
+      this.recognition.lang = 'es-ES';
+    }
+    if (this.speech.lang === 'fr') {
+      this.recognition.lang = 'fr-FR';
+    }
+    if (this.speech.lang === 'ja') {
+      this.recognition.lang = 'jp-JP';
+    }
+    this.recognition.interimResults = false;
+    this.recognition.maxAlternatives = 1;
+
+    let micIcon = this.shadowRoot.querySelector('#mic');
+    this.recognition.start();
+    micIcon.style.color = "green";
+    this.recognition.onresult = function(event) {
+      var answer = event.results[0][0].transcript;
+      this.shadowRoot.querySelector('input').value = answer;
+      this.checkUserAnswer();
+    }.bind(this);
+
+    this.recognition.onspeechend = function() {
+      this.recognition.stop();
+      micIcon.style.color = '';
+    }.bind(this);
+
+    this.recognition.onnomatch = function() {
+      console.log("No match found.");
+    }
+
+    this.recognition.onerror = function(event) {
+      console.log(event.error);
+    }
   }
 
   checkUserAnswer() {
@@ -154,12 +208,9 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
     this.sideToShow = this.back ? 'back' : 'front';
     this.correctAnswer = '';
     this.shadowRoot.querySelector('input').disabled = false;
-    // this.dispatchEvent(
-    //   new CustomEvent('reset', {
-    //     detail: this.status,
-    //     bubbles: true,
-    //   })
-    // );
+    this.shadowRoot.querySelector('input').value = '';
+    this.recognition.stop();
+    this.shadowRoot.querySelector('#mic').style.color = '';
   }
 
   // CSS - specific to Lit
@@ -278,15 +329,12 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
         margin-right: 15px;
         display: flex;
         align-items: center;
+        font-family: Helvetica;
       }
 
       #status-icon {
         --simple-icon-height: 25px;
         --simple-icon-width: 25px;
-      }
-
-      input:disabled {
-        color: var(--simple-colors-default-theme-accent-12);
       }
 
       .answer-message {
@@ -315,6 +363,7 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
           type="text"
           .placeholder="${this.t.yourAnswer}"
           @input="${this.inputChanged}"
+          @keypress="${(e) => e.key === 'Enter' ? this.checkUserAnswer() : ''}"
           .value="${this.userAnswer}"
         />
         ${this.status === 'pending'
@@ -334,16 +383,30 @@ export class AnswerBox extends I18NMixin(SimpleColors) {
             >`}
       </div>
       <div class="retrySpeech">
+        ${this.listen && this.status === 'pending'
+        ? html` <simple-icon-lite
+              id='mic'
+              tabindex="0"
+              icon="../av/mic"
+              @keypress="${(e) => e.key === 'Enter' ? this.recognizeSpeech() : ''}"
+              @click="${this.recognizeSpeech}"
+              dark
+            ></simple-icon-lite>`
+          : ``}
         ${this.speak
           ? html` <simple-icon-lite
+              tabindex="0"
               icon="../av/volume-up"
+              @keypress="${(e) => e.key === 'Enter' ? this.speakWords() : ''}"
               @click="${this.speakWords}"
               dark
             ></simple-icon-lite>`
           : ``}
         <simple-icon-lite
+          tabindex="0"
           id="retry"
           icon="refresh"
+          @keypress="${(e) => e.key === 'Enter' ? this.resetCard() : ''}"
           @click="${this.resetCard}"
           dark
         ></simple-icon-lite>

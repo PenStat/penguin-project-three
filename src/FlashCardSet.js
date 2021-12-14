@@ -106,7 +106,7 @@ export class FlashCardSet extends SimpleColors {
       <p slot="front">${arguments[1]}</p>
       <p slot="back">${arguments[2]}</p>`;
     // eslint-disable-next-line prefer-rest-params
-    el.setAttribute('img-src', arguments[3]);
+    el.setAttribute('img-source', arguments[3]);
     // eslint-disable-next-line prefer-rest-params
     if (arguments[4].includes('speak')) {
       el.setAttribute('speak', '');
@@ -171,9 +171,9 @@ export class FlashCardSet extends SimpleColors {
     return html`
       <div id='container'>
         <div style='display: inline-flex'>
-          <simple-icon-lite icon='arrow-back' class='arrow-left' onclick='${this.changeVisible()}'></simple-icon-lite>
+          <simple-icon-lite tabindex="0" icon='arrow-back' class='arrow-left' onclick='${this.changeVisible()}'></simple-icon-lite>
           <div id="content"></div>
-          <simple-icon-lite icon='arrow-forward' class='arrow-right'></simple-icon-lite>
+          <simple-icon-lite tabindex="0" icon='arrow-forward' class='arrow-right'></simple-icon-lite>
         </div>
         <slot style="display: none"></slot>
       </div>
